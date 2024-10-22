@@ -3,3 +3,13 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+  font-family: 'HarmonyOS_Sans_SC_Regular';
+  src: url('@/assets/Fonts/HarmonyOS_Sans_SC_Regular.woff2') format('woff2'),
+       url('@/assets/Fonts/HarmonyOS_Sans_SC_Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body{
+    font-family: 'HarmonyOS_Sans_SC_Regular';
+}

@@ -39,10 +39,9 @@ export default {
 </script>
 <style scoped>
 #map-container {
-  width: 66vw;
+  width: 50vw;
   height: 100vh;
-  border:0px solid #bedcda;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 @media (max-aspect-ratio: 1){
   #map-container{

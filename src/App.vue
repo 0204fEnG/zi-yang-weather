@@ -21,11 +21,6 @@ export default {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap; /* 允许子项换行 */
-   background-color: #bedcda;
+   background-color: #79be79;
 }
-/* @media (max-aspect-ratio:1){
-  #app{
-    display: block;
-  }
-} */
 </style>
