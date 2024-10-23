@@ -1,17 +1,17 @@
 <template>
   <div id="weather-container">
     <div class="weather-nav">
-        <router-link @click="currentActiveLink='weather'" @mouseover="currentHoverLink='weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='weather'||isActiveLink('weather')}">天气</router-link>
-        <router-link @click="currentActiveLink='assistant'" @mouseover="currentHoverLink='assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='assistant'||isActiveLink('assistant')}">生活助手</router-link>
-        <router-link @click="currentActiveLink='setting'" @mouseover="currentHoverLink='setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='setting'||isActiveLink('setting')}">设置</router-link>
+        <div class="router-link" to="/weather" @click="linkClick('weather')" @mouseover="currentHoverLink='weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='weather'||isActiveLink('weather')}">天气</div>
+        <div class="router-link" to="/assistant" @click="linkClick('assistant')" @mouseover="currentHoverLink='assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='assistant'||isActiveLink('assistant')}">生活助手</div>
+        <div class="router-link" to="/setting" @click="linkClick('setting')" @mouseover="currentHoverLink='setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='setting'||isActiveLink('setting')}">设置</div>
     </div>
-    <router-view></router-view>
+        <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'weather-view',
+  name: 'WeatherView',
   data () {
     return {
       currentActiveLink: 'weather',
@@ -19,6 +19,12 @@ export default {
     }
   },
   methods: {
+    linkClick (select) {
+      if (this.currentActiveLink !== select) {
+        this.currentActiveLink = select
+        this.$router.push(this.currentActiveLink)
+      }
+    },
     isActiveLink (isActive) {
       return this.currentHoverLink === '' && this.currentActiveLink === isActive
     }
@@ -32,7 +38,6 @@ export default {
     flex: 1;
     height: 100vh;
     border: 5px solid rgb(255, 255, 255);
-    border-radius:5px;
     background-color: aquamarine;
     background-image: url('@/assets/WeatherBackground/Clear.jpg');
     background-size:cover;
@@ -53,7 +58,7 @@ export default {
     background-color: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(5px);
 }
-router-link{
+.router-link{
     color:rgb(0, 0, 0);
     font-size: 20px;
     line-height: 40px;

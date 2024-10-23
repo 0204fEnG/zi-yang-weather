@@ -1,17 +1,15 @@
 <template>
 <div id="app">
 <MapView></MapView>
-<WeatherView></WeatherView>
+<router-view></router-view>
 </div>
 </template>
 
 <script>
 import MapView from '@/views/MapView.vue'
-import WeatherView from '@/views/WeatherView.vue'
 export default {
   components: {
-    MapView,
-    WeatherView
+    MapView
   }
 }
 </script>

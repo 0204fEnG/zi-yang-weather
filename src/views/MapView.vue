@@ -5,7 +5,7 @@
 import AMapLoader from '@amap/amap-jsapi-loader'
 
 export default {
-  name: 'map-view',
+  name: 'MapView',
   mounted () {
     this.initAMap()
   },
@@ -41,7 +41,6 @@ export default {
 #map-container {
   width: 50vw;
   height: 100vh;
-  border-radius: 5px;
 }
 @media (max-aspect-ratio: 1){
   #map-container{
