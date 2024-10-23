@@ -1,5 +1,7 @@
 <template>
-  <div id="map-container"></div>
+  <div id="map-container">
+    <div id="map-view"></div>
+  </div>
 </template>
 <script>
 import AMapLoader from '@amap/amap-jsapi-loader'
@@ -23,7 +25,7 @@ export default {
         plugins: ['AMap.Scale'] // 需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
       })
         .then((AMap) => {
-          this.map = new AMap.Map('map-container', {
+          this.map = new AMap.Map('map-view', {
             // 设置地图容器id
             viewMode: '3D', // 是否为3D地图模式
             zoom: 11, // 初始化地图级别
@@ -41,9 +43,15 @@ export default {
 #map-container {
   width: 50vw;
   height: 100vh;
+  padding: 20px 0 20px 20px;
+}
+#map-view{
+  width: 100%;
+  height: 100%;
 }
 @media (max-aspect-ratio: 1){
   #map-container{
+    padding: 20px;
     width: 100vw;
     height: 100vw;
   }

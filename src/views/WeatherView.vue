@@ -1,9 +1,9 @@
 <template>
   <div id="weather-container">
     <div class="weather-nav">
-        <div class="router-link" to="/weather" @click="linkClick('weather')" @mouseover="currentHoverLink='weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='weather'||isActiveLink('weather')}">天气</div>
-        <div class="router-link" to="/assistant" @click="linkClick('assistant')" @mouseover="currentHoverLink='assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='assistant'||isActiveLink('assistant')}">生活助手</div>
-        <div class="router-link" to="/setting" @click="linkClick('setting')" @mouseover="currentHoverLink='setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='setting'||isActiveLink('setting')}">设置</div>
+        <div class="router-link"  @click="linkClick('weather')" @mouseover="currentHoverLink='weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='weather'||isActiveLink('weather')}">天气</div>
+        <div class="router-link"  @click="linkClick('assistant')" @mouseover="currentHoverLink='assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='assistant'||isActiveLink('assistant')}">生活助手</div>
+        <div class="router-link"  @click="linkClick('setting')" @mouseover="currentHoverLink='setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='setting'||isActiveLink('setting')}">设置</div>
     </div>
         <router-view></router-view>
   </div>
@@ -37,16 +37,14 @@ export default {
     position: relative;;
     flex: 1;
     height: 100vh;
-    border: 5px solid rgb(255, 255, 255);
-    background-color: aquamarine;
-    background-image: url('@/assets/WeatherBackground/Clear.jpg');
+    padding: 20px;
     background-size:cover;
     background-repeat:repeat;
 }
 @media (max-aspect-ratio: 1){
     #weather-container{
         height: 2000px;
-        background-color: burlywood;
+        padding:0;
     }
 }
 .weather-nav{

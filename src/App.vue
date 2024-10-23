@@ -19,6 +19,7 @@ export default {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap; /* 允许子项换行 */
-   background-color: #79be79;
+  background-image: url('@/assets/WeatherBackground/Clear.jpg');
+  background-size:cover;
 }
 </style>
