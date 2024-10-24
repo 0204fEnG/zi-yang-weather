@@ -10,6 +10,7 @@ const router = new VueRouter({
     {
       path: '/',
       component: WeatherView,
+      redirect: '/weather',
       children: [
         { path: '/weather', component: WeatherDetail },
         { path: '/assistant', component: LifeAssistant },

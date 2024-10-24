@@ -12,4 +12,8 @@
 }
 body{
     font-family: 'HarmonyOS_Sans_SC_Regular';
+    overflow-y: auto;
+}
+body::-webkit-scrollbar {
+    display: none; /* 隐藏滚动条 */
 }

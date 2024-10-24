@@ -41,19 +41,22 @@ export default {
 </script>
 <style scoped>
 #map-container {
-  width: 50vw;
-  height: 100vh;
-  padding: 20px 0 20px 20px;
+  width: 50%;
+  height: 100%;
+  border-radius:10px;
+  margin-right: 20px;
 }
 #map-view{
   width: 100%;
   height: 100%;
+  border-radius: 10px;
 }
 @media (max-aspect-ratio: 1){
   #map-container{
-    padding: 20px;
-    width: 100vw;
-    height: 100vw;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin-right:0;
+    margin-bottom: 20px;
   }
 }
 </style>
