@@ -13,14 +13,13 @@ export default {
       key: '70624df561ac6289fc2859eb6e1582ca',
       securityJsCode: '845c0f04a314d5a4fce02831ced87da3',
       currentPosition: {
-        latitude: null,
-        longitude: null
+        latitude: 28.165342,
+        longitude: 112.946341
       },
       map: null
     }
   },
   created () {
-    // this.getLocation()
   },
   mounted () {
     this.initAMap()
@@ -29,25 +28,6 @@ export default {
     this.map?.destroy()
   },
   methods: {
-    // getLocation () {
-    //   console.log('hello')
-    //   if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition((position) => {
-    //       console.log('world')
-    //       this.currentPosition.latitude = position.coords.latitude
-    //       this.currentPosition.longitude = position.coords.longitude
-    //       this.initAMap()
-    //     }, (err) => {
-    //       console.warn('ERROR(' + err.code + '): ' + err.message)
-    //     }, {
-    //       enableHighAccuracy: true,
-    //       timeout: 10000,
-    //       maximumAge: 0
-    //     })
-    //   } else {
-    //     console.log('Geolocation is not supported by this browser.')
-    //   }
-    // },
     initAMap () {
       window._AMapSecurityConfig = {
         securityJsCode: this.securityJsCode
@@ -58,6 +38,12 @@ export default {
         plugins: ['AMap.Scale', 'AMap.Geolocation'] // 需要使用的的插件列表，如比例尺'AMap.Scale'，支持添加多个如：['...','...']
       })
         .then((AMap) => {
+          this.map = new AMap.Map('map-view', {
+            // 设置地图容器id
+            viewMode: '3D', // 是否为3D地图模式
+            zoom: 16, // 初始化地图级别
+            center: [this.currentPosition.longitude, this.currentPosition.latitude] // 初始化地图中心点位置
+          })
           const mapGeoLocation = new AMap.Geolocation({
             position: 'RB',
             showCircle: false,
@@ -71,12 +57,6 @@ export default {
             } else {
               console.log('获取经纬度错误！')
             }
-          })
-          this.map = new AMap.Map('map-view', {
-            // 设置地图容器id
-            viewMode: '3D', // 是否为3D地图模式
-            zoom: 16, // 初始化地图级别
-            center: [this.currentPosition.longitude, this.currentPosition.latitude] // 初始化地图中心点位置
           })
           const scale = new AMap.Scale()
           this.map.addControl(scale)

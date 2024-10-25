@@ -24,7 +24,7 @@ export default {
    display: flex;
    flex-direction: row;
    flex-wrap: wrap; /* 允许子项换行 */
-  background-image: url('@/assets/WeatherBackground/Clear.jpg');
+  background-image: url('@/assets/WeatherBackground/ModerateRain.jpg');
   background-size:cover;
 }
 @media (max-aspect-ratio: 1){

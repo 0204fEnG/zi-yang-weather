@@ -18,9 +18,6 @@ export default {
       currentHoverLink: ''
     }
   },
-  // mounted () {
-  //   this.initStickyObserver()
-  // },
   methods: {
     linkClick (select) {
       if (this.$route.path !== select) {
@@ -31,31 +28,7 @@ export default {
     isActiveLink (isActive) {
       return this.currentHoverLink === '' && this.currentActiveLink === isActive
     }
-    // initStickyObserver () {
-    //   const stickyBox = document.querySelector('.weather-nav')
-    //   const observer = new IntersectionObserver((entries) => {
-    //     entries.forEach(entry => {
-    //       if (!entry.isIntersecting) {
-    //         // 当粘性盒子触发粘性固定后
-    //         stickyBox.classList.add('nav-stick') // 更改边框圆角为0px
-    //       } else {
-    //         // 当粘性盒子未触发粘性固定
-    //         stickyBox.classList.remove('nav-stick') // 恢复边框圆角
-    //       }
-    //     })
-    //   }, {
-    //     rootMargin: '0px 0px 0px 0px',
-    //     threshold: 0
-    //   })
-
-    //   observer.observe(document.querySelector('.weather-container'))
-    // }
   },
-  // beforeDestroy () {
-  //   if (this.observer) {
-  //     this.observer.disconnect()
-  //   }
-  // },
   watch: {
     // 监听路由变化
     $route (to, from) {
