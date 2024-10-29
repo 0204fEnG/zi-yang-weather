@@ -1,11 +1,13 @@
 <template>
-  <div id="weather-container">
+  <div id="weather-container" ref="weatherContainer">
     <div class="weather-nav">
         <div class="router-link"  @click="linkClick('/weather')" @mouseover="currentHoverLink='/weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/weather'||isActiveLink('/weather')}">天气</div>
         <div class="router-link"  @click="linkClick('/assistant')" @mouseover="currentHoverLink='/assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/assistant'||isActiveLink('/assistant')}">生活助手</div>
         <div class="router-link"  @click="linkClick('/setting')" @mouseover="currentHoverLink='/setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/setting'||isActiveLink('/setting')}">设置</div>
     </div>
+    <keep-alive include="WeatherDetail">
         <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -15,7 +17,12 @@ export default {
   data () {
     return {
       currentActiveLink: '/weather',
-      currentHoverLink: ''
+      currentHoverLink: '',
+      scrollPositions: {
+        '/weather': 0,
+        '/assistant': 0,
+        '/setting': 0
+      }
     }
   },
   methods: {
@@ -34,7 +41,12 @@ export default {
     $route (to, from) {
       // to: Route对象，即将进入的目标路由对象
       // from: Route对象，当前导航正要离开的路由
+      this.scrollPositions[from.path] = this.$refs.weatherContainer.scrollTop
       this.currentActiveLink = to.path
+      this.$nextTick(() => {
+        // 这里的代码会在 DOM 更新之后执行
+        this.$refs.weatherContainer.scrollTop = this.scrollPositions[to.path]
+      })
     }
   }
 }
