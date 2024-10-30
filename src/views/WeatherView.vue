@@ -67,6 +67,7 @@ export default {
 .weather-nav{
     position:sticky;
     top:0;
+    z-index: 1;
     width: 100%;
     display: flex;
     border-radius:10px 10px 0 0;
@@ -76,14 +77,14 @@ export default {
 }
 .router-link{
     color:rgb(0, 0, 0);
-    font-size: 20px;
-    line-height: 40px;
-    padding: 10px 20px;
+    font-size: 2.5vh;
+    line-height: 5vh;
+    padding: 1vh 2vh;
     cursor:pointer;
     text-align: center;
 }
 .active-router-link{
-    border-bottom:3px solid rgb(255, 255, 255);
+    border-bottom:0.5vh solid rgb(255, 255, 255);
     color: white;
 }
 @media (max-aspect-ratio: 1){
