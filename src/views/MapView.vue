@@ -73,9 +73,10 @@ export default {
 <style scoped>
 #map-container {
   width: 50%;
-  height: 100%;
+  /* height: 75%; */
+  height: 39vw;
   border-radius:10px;
-  margin-right: 20px;
+  margin-right: 1vw;
 }
 #map-view{
   width: 100%;
@@ -87,7 +88,7 @@ export default {
     width: 100%;
     aspect-ratio: 1 / 1;
     margin-right:0;
-    margin-bottom: 20px;
+    margin-bottom: 1vw;
   }
 }
 </style>

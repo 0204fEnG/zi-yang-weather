@@ -19,7 +19,7 @@ export default {
       try {
         const response = await axios.get('https://devapi.qweather.com/v7/weather/now?location=101010100', {
           headers: {
-            Authorization: 'BearereyJhbGciOiJFZERTQSIsImtpZCI6IktLV0VDRjcyQ0QifQ.eyJzdWIiOiIyNzhBV0o2Qks4IiwiaWF0IjoxNzMwMzEwMzcxLCJleHAiOjE3MzA5MTUxNzF9.9kigi7aIcDh56vCCDCRHVxKo9qxw5m5PFtjzT-cNaum3EWNFAlL11Lb_L7gkrYnX2ORizpgThuktxPQI7FvFDg'
+            Authorization: '{}'
           }
         })
         this.weatherinfo = response

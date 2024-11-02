@@ -16,10 +16,10 @@ export default {
 
 <style scoped>
    #app {
-    width: 75%;
-    height: 80vh;
-    margin: 10vh 12.5%;
-    padding: 20px;
+    width: 80vw;
+    height: 100vh;
+    margin: 0 10vw;
+    padding: 1vw;
     border-radius:20px;
    display: flex;
    flex-direction: row;
@@ -29,7 +29,7 @@ export default {
 }
 @media (max-aspect-ratio: 1){
     #app{
-      width: 100%;
+      width: 100vw;
       height: auto;
       border-radius:0;
       margin: 0;

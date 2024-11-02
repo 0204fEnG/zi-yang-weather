@@ -25,6 +25,16 @@ export default {
       }
     }
   },
+  created () {
+    // 从本地存储获取JWT
+    const jwt = localStorage.getItem('jwt')
+    // 如果JWT存在，则将其保存到Vuex store中
+    if (jwt) {
+      this.$store.commit('jwt/SET_JWT', jwt)
+    } else {
+      this.$store.dispatch('jwt/refreshToken')
+    }
+  },
   methods: {
     linkClick (select) {
       if (this.$route.path !== select) {
@@ -55,7 +65,7 @@ export default {
 <style scoped>
 #weather-container{
     position: relative;;
-    width: calc(50% - 20px);
+    width: calc(50% - 1vw);
     height: 100%;
     border-radius:10px;
     background-color:rgb(165, 194, 223);
@@ -90,7 +100,7 @@ export default {
 @media (max-aspect-ratio: 1){
     #weather-container{
         width: 100%;
-        height: calc(100vh - 40px);
+        height: calc(100vh - 2vw);
     }
 }
 </style>
