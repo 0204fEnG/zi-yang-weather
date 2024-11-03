@@ -1,4 +1,4 @@
-import { jwtApi } from '../../api/modules/jwt.js'
+import { getJwt } from '@/api/modules/jwt.js'
 export default {
   namespaced: true, // 启用命名空间
 
@@ -26,14 +26,13 @@ export default {
     async refreshToken ({ commit }) {
       // 这里应该是调用API来获取新的JWT的逻辑
       // 假设返回一个新的JWT
-      try {
-        const newJwt = await jwtApi.getJwt() // 示例token
-        commit('SET_JWT', newJwt)
-        // 保存新的JWT到本地存储
-        localStorage.setItem('jwt', newJwt)
-      } catch (error) {
-        console.log('获取新的JWT遇到错误', error)
-      }
+      console.log('vuex开始获取jwt')
+      const newJwt = await getJwt() // 示例token
+      console.log('获取成功,值为', newJwt)
+      commit('SET_JWT', newJwt.data.token)
+      console.log('保存成功jwt')
+      // 保存新的JWT到本地存储
+      localStorage.setItem('jwt', newJwt.data.token)
     }
   }
 }

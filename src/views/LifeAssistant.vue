@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { getCurrentWeather } from '@/api/modules/weather.js'
 export default {
   name: 'LifeAssistant',
   data () {
@@ -11,23 +11,15 @@ export default {
       weatherinfo: null
     }
   },
-  mounted () {
-    this.getWeatherData()
+  created () {
+    console.log('开始获取实时天气')
+    this.initCurrent()
   },
   methods: {
-    async getWeatherData () {
-      try {
-        const response = await axios.get('https://devapi.qweather.com/v7/weather/now?location=101010100', {
-          headers: {
-            Authorization: '{}'
-          }
-        })
-        this.weatherinfo = response
-      } catch (error) {
-        alert('错误', error)
-      }
+    async initCurrent () {
+      console.log('开始获取cur')
+      this.weatherinfo = await getCurrentWeather({ location: 101010100 })
     }
-
   }
 }
 </script>

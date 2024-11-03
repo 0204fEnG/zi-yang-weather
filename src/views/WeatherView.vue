@@ -26,16 +26,23 @@ export default {
     }
   },
   created () {
-    // 从本地存储获取JWT
-    const jwt = localStorage.getItem('jwt')
-    // 如果JWT存在，则将其保存到Vuex store中
-    if (jwt) {
-      this.$store.commit('jwt/SET_JWT', jwt)
-    } else {
-      this.$store.dispatch('jwt/refreshToken')
-    }
+    this.initJwt()
   },
   methods: {
+    async initJwt () {
+      const jwt = localStorage.getItem('jwt')
+      console.log(jwt)
+      // 如果JWT存在，则将其保存到Vuex store中
+      if (jwt !== null && jwt !== undefined) {
+        console.log('weatherview中获取本地jwt成功')
+        this.$store.commit('jwt/SET_JWT', jwt)
+        console.log('weatherview将jwt保存到vuex成功')
+      } else {
+        console.log('weatherview本地不存在jwt，开始调用vuex方法获取刷新')
+        await this.$store.dispatch('jwt/refreshToken')
+        console.log('weatherview刷新jwt成功,jwt为', this.$store.state.jwt.jwt)
+      }
+    },
     linkClick (select) {
       if (this.$route.path !== select) {
         this.currentActiveLink = select
