@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getCurrentWeather } from '@/api/modules/weather.js'
+import { getCurrentWeather } from '@/api/modules/weather'
 export default {
   name: 'LifeAssistant',
   data () {

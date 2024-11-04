@@ -1,7 +1,7 @@
 <template>
 <div id="weather-detail">
   <div class="country">
-    <div>岳麓区</div>
+    <div>{{currentCountryName}}</div>
     <div class="left">&lt;</div>
     <div class="right">&gt;</div>
   </div>
@@ -28,8 +28,12 @@ export default {
     return {
     }
   },
-  name: 'WeatherDetail'
-
+  name: 'WeatherDetail',
+  computed: {
+    currentCountryName () {
+      return this.$store.state.weather.currentCountry.name
+    }
+  }
 }
 </script>
 
@@ -46,7 +50,7 @@ export default {
   color:white;
   line-height: 5vh;
   font-size:3vh;
-  top:7.5vh;
+  top:7.4vh;
   width: 100%;
   height: 5vh;
   background-color: rgba(255, 255, 255, 0.5);

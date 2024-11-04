@@ -27,6 +27,7 @@ export default {
   },
   created () {
     this.initJwt()
+    this.initWeather()
   },
   methods: {
     async initJwt () {
@@ -41,6 +42,18 @@ export default {
         console.log('weatherview本地不存在jwt，开始调用vuex方法获取刷新')
         await this.$store.dispatch('jwt/refreshToken')
         console.log('weatherview刷新jwt成功,jwt为', this.$store.state.jwt.jwt)
+      }
+    },
+    initWeather () {
+      const lastCountryStr = localStorage.getItem('lastCountry')
+      if (lastCountryStr !== null && lastCountryStr !== undefined) {
+        const lastCountryObj = JSON.parse(lastCountryStr)
+        this.$store.commit('weather/setCurrentCountry', lastCountryObj)
+      }
+      const lastFavouriteCountriesStr = localStorage.getItem('lastFavouriteCountries')
+      if (lastFavouriteCountriesStr !== null && lastFavouriteCountriesStr !== undefined) {
+        const lastFavouriteCountriesObj = JSON.parse(lastFavouriteCountriesStr)
+        this.$store.commit('weather/setFavouriteCountries', lastFavouriteCountriesObj)
       }
     },
     linkClick (select) {

@@ -10,23 +10,23 @@ const mapService = axios.create({
 
 // 创建获取天气数据的 Axios 实例
 const weatherService = axios.create({
-  baseURL: 'https://devapi.qweather.com',
   timeout: 5000
 })
 weatherService.interceptors.request.use(
-  function (config) {
+  async function (config) {
     // 在发送请求之前做些什么
     // config 是当前请求的配置对象
 
     // 例如，你可以在这里添加认证令牌到请求头
     if (store.getters['jwt/isTokenExpired']) {
-      store.dispatch('jwt/refreshToken')
+      await store.dispatch('jwt/refreshToken')
     }
     config.headers.Authorization = `Bearer ${store.state.jwt.jwt}`
     // 可以根据需要修改 config 的任何属性
     // ...
 
     // 最终需要返回 config 对象
+    return config
   },
   function (error) {
     // 对请求错误做些什么
