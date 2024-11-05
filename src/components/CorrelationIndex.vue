@@ -12,6 +12,8 @@ export default {
 .correlation-index{
   width: 100%;
   height: 200px;
-  background-color: rgb(132, 143, 195);
+  border-radius:10px;
+  margin-bottom:1vh;
+  background-color: rgb(3, 73, 95,0.5);
 }
 </style>

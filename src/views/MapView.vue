@@ -54,7 +54,7 @@ export default {
           this.map = new AMap.Map('map-view', {
             // 设置地图容器id
             viewMode: '3D', // 是否为3D地图模式
-            zoom: 16, // 初始化地图级别
+            zoom: 19, // 初始化地图级别
             center: [this.currentLocation.longitude, this.currentLocation.latitude] // 初始化地图中心点位置
           })
           const mapGeoLocation = new AMap.Geolocation({

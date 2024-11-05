@@ -88,7 +88,9 @@ export default {
     width: calc(50% - 1vw);
     height: 100%;
     border-radius:10px;
-    background-color:rgb(165, 194, 223);
+    /* background-color:rgb(165, 194, 223); */
+     background-image: url('@/assets/WeatherBackground/Clear.jpg');
+     background-size:cover;
     overflow-y: auto;
 }
 #weather-container::-webkit-scrollbar {
@@ -102,8 +104,8 @@ export default {
     display: flex;
     border-radius:10px 10px 0 0;
     justify-content: center;
-    background-color: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(7px);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(127.5, 127.5, 127.5, 0.5));
+    backdrop-filter: blur(10px);
 }
 .router-link{
     color:rgb(0, 0, 0);
