@@ -22,7 +22,7 @@ export default {
 <style scoped>
 .weather-7days{
     width: 100%;
-    border-radius:10px;
+    /* border-radius:2.5vh; */
     margin-bottom: 1vh;
 }
 .title{
@@ -38,7 +38,7 @@ export default {
   width: 100%;
   height: 35vh;
   padding: 3vh 0;
-  border-radius:10px;
+  border-radius:2.5vh;
   background-color: rgb(3, 73, 95,0.5);
 }
 </style>

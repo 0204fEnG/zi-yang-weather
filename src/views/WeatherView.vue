@@ -87,7 +87,7 @@ export default {
     position: relative;;
     width: calc(50% - 1vw);
     height: 100%;
-    border-radius:10px;
+    border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
      background-image: url('@/assets/WeatherBackground/Clear.jpg');
      background-size:cover;

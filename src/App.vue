@@ -20,7 +20,7 @@ export default {
     height: 100vh;
     margin: 0 10vw;
     padding: 1vw;
-    border-radius:20px;
+    border-radius:5vh;
    display: flex;
    flex-direction: row;
    flex-wrap: wrap; /* 允许子项换行 */

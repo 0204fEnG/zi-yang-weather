@@ -43,7 +43,7 @@ export default {
 #weather-detail{
     width: 100%;
     height: auto;
-    border-radius:10px;
+    /* border-radius:10px; */
     background-size:cover;
     background-repeat: no-repeat;
 }
@@ -61,7 +61,7 @@ export default {
   line-height: 5vh;
   font-size:3vh;
   margin-bottom:1vh;
-  top:7.5vh;
+  top:7.44vh;
   width: 100%;
   height: 5vh;
   background:linear-gradient(to bottom,rgba(127.5,127.5,127.5,0.5),rgb(255, 255, 255,0.5));

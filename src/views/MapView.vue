@@ -98,13 +98,13 @@ export default {
   width: 50%;
   /* height: 75%; */
   height: 39vw;
-  border-radius:10px;
+  border-radius:2.5vh;
   margin-right: 1vw;
 }
 #map-view{
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  border-radius: 2.5vh;
 }
 @media (max-aspect-ratio: 1){
   #map-container{
