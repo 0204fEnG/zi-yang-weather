@@ -109,19 +109,19 @@ export default {
 background: linear-gradient(to bottom,rgba(179,219,220,0.5),rgba(255, 255, 255, 0.5));
 }
 .country1-color-3{
-background: linear-gradient(to bottom,rgba(73,190,248,0.5),rgba(185, 225, 246, 0.5));
+background: linear-gradient(to bottom,rgba(73,190,248,0.8),rgba(185, 225, 246, 0.8));
 }
 .country1-color-4{
-background: linear-gradient(to bottom,rgba(0,183,255,0.5),rgb(147, 226, 244,0.5));
+background: linear-gradient(to bottom,rgba(0,183,255,0.8),rgb(147, 226, 244,0.8));
 }
 .country1-color-5{
-background: linear-gradient(to bottom);
+background: linear-gradient(to bottom,rgba(248, 215, 133, 0.5),rgb(255, 255, 255,0.5));
 }
 .country1-color-6{
-background: linear-gradient(to bottom);
+background: linear-gradient(to bottom,rgba(155, 138, 115, 0.5),rgb(128, 128, 128,0.5));
 }
 .country1-color-7{
-background: linear-gradient(to bottom);
+background: linear-gradient(to bottom,rgba(91, 74, 247, 0.5),rgba(116, 172, 241, 0.5));
 }
 
 .country2-color-1{
@@ -131,18 +131,18 @@ background: linear-gradient(to bottom);
   background: linear-gradient(to bottom,rgba(255, 255, 255, 0.5),rgba(83, 211, 240, 0.5));
 }
 .country2-color-3{
-  background:linear-gradient(to bottom,rgb(185, 255, 246,0.5),rgba(57, 163, 245, 0.5));
+  background:linear-gradient(to bottom,rgb(185, 255, 246,0.8),rgba(57, 163, 245, 0.8));
 }
 .country2-color-4{
-  background: linear-gradient(to bottom,rgb(147,226,244,0.5),rgb(72, 146, 236));
+  background: linear-gradient(to bottom,rgb(147,226,244,0.8),rgb(72, 146, 236,0.8));
 }
 .country2-color-5{
-  background: linear-gradient(to bottom,);
+  background: linear-gradient(to bottom,rgb(255, 255, 255,0.5),rgba(232, 233, 141, 0.5));
 }
 .country2-color-6{
-  background: linear-gradient(to bottom,);
+  background: linear-gradient(to bottom,rgb(128, 128, 128,0.5),rgba(244, 142, 95, 0.5));
 }
 .country2-color-7{
-  background: linear-gradient(to bottom,);
+  background: linear-gradient(to bottom,rgba(116, 172, 241, 0.5),rgb(47, 50, 246,0.5));
 }
 </style>

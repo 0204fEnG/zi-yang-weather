@@ -130,8 +130,6 @@
     </div>
     </div>
   </div>
-  <!-- <buttom class="hour-buttom hour-left" @click="clickLeftButtom()">&lt;</buttom>
-  <buttom class="hour-buttom hour-right" @click="clickRightButtom()">&gt;</buttom> -->
 </div>
 </template>
 
@@ -143,24 +141,8 @@ export default {
     }
   },
   methods: {
-    // clickLeftButtom () {
-    //   const hourContainer = document.querySelector('.bottom')
-    //   const scrollStep = this.viewHeight * (9.5 / 100)
-    //   hourContainer.scrollLeft -= scrollStep
-    // },
-    // clickRightButtom () {
-    //   const hourContainer = document.querySelector('.bottom')
-    //   const scrollStep = this.viewHeight * (9.5 / 100)
-    //   hourContainer.scrollLeft += scrollStep
-    // }
   },
   computed: {
-    // viewHeight () {
-    //   return window.innerHeight
-    // },
-    // viewWidth () {
-    //   return window.innerWidth
-    // }
   }
 }
 </script>
@@ -175,7 +157,8 @@ export default {
     border-radius:2.5vh;
     overflow: hidden;
     margin-bottom: 1vh;
-  background-color: rgb(3, 73, 95,0.5);
+  background-color: rgba(128, 128, 128, 0.5);
+  backdrop-filter: blur(10px);
 }
 .top{
   color:white;
@@ -199,42 +182,6 @@ export default {
   background-color:rgba(255,255,255,0.25);
   border-radius: 2.5vh;
 }
-/* .bottom::-webkit-scrollbar-thumb{
-  height: 2vh;
-  background-color:aquamarine
-}
-.bottom::-webkit-scrollbar-track{
-  background-color:bisque
-}
-.bottom::-webkit-scrollbar-button{
-  background-color:cadetblue;
-}
-.bottom::-webkit-scrollbar-corner{
-  background-color:blue
-} */
-.hour-buttom{
-  position: absolute;
-  color:white;
-  font-size:1.5vh;
-  text-align: center;
-  border:0.25vh solid white;
-  border-radius:1.25vh;
-  width: 2.5vh;
-  height: 2.5vh;
-  top:12vh;
-}
-/* .hour-buttom:hover{
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.185);
-}
-.hour-left{
-  left:1%;
-  transform: translateY(-50%);
-}
-.hour-right{
-  right:1%;
-  transform: translateY(-50%);
-} */
 .hour-container{
   color:white;
   display: flex;

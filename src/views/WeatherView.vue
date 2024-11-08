@@ -89,8 +89,9 @@ export default {
     height: 100%;
     border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
-     background-image: url('@/assets/WeatherBackground/Cloudy.jpg');
+     background-image: url('@/assets/WeatherBackground/Clear1.jpg');
      background-size:cover;
+     background-repeat:no-repeat;
     overflow-y: auto;
 }
 #weather-container::-webkit-scrollbar {
@@ -126,19 +127,19 @@ export default {
   background: linear-gradient(to bottom,rgba(0, 221, 255, 0.5),rgba(179, 219, 220, 0.5));
 }
 .nav-color-3{
-  background: linear-gradient(to bottom,rgba(0, 128, 255, 0.5),rgba(73, 190, 248, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 128, 255, 0.8),rgba(73, 190, 248, 0.8));
 }
 .nav-color-4{
-  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.5),rgba(0, 183, 255, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.8),rgba(0, 183, 255, 0.8));
 }
 .nav-color-5{
-  background: linear-gradient(to bottom,rgba(227, 160, 25, 0.5),rgba(155, 138, 115, 0.5));
+  background: linear-gradient(to bottom,rgba(20, 141, 240, 0.5),rgba(248, 215, 133, 0.5));
 }
 .nav-color-6{
-  background: linear-gradient(to bottom,rgba(227, 160, 25, 0.5),rgba(155, 138, 115, 0.5));
+  background: linear-gradient(to bottom,rgba(246, 173, 110, 0.685),rgba(155, 138, 115, 0.5));
 }
 .nav-color-7{
-  background: linear-gradient(to bottom,rgba(227, 160, 25, 0.5),rgba(155, 138, 115, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 0, 0, 0.5),rgba(91, 74, 247, 0.5));
 }
 @media (max-aspect-ratio: 1){
     #weather-container{

@@ -14,6 +14,7 @@ export default {
   height: 200px;
   border-radius:2.5vh;
   margin-bottom:1vh;
-  background-color: rgb(3, 73, 95,0.5);
+  background-color: rgba(128, 128, 128, 0.5);
+  backdrop-filter: blur(10px);
 }
 </style>
