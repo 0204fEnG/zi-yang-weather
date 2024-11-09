@@ -1,6 +1,6 @@
 <template>
   <div id="weather-container" ref="weatherContainer">
-    <div class="weather-nav nav-color-4">
+    <div class="weather-nav nav-color-1">
         <div class="router-link"  @click="linkClick('/weather')" @mouseover="currentHoverLink='/weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/weather'||isActiveLink('/weather')}">天气</div>
         <div class="router-link"  @click="linkClick('/assistant')" @mouseover="currentHoverLink='/assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/assistant'||isActiveLink('/assistant')}">生活助手</div>
         <div class="router-link"  @click="linkClick('/setting')" @mouseover="currentHoverLink='/setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/setting'||isActiveLink('/setting')}">设置</div>
@@ -85,11 +85,11 @@ export default {
 <style scoped>
 #weather-container{
     position: relative;;
-    width: calc(50% - 1vw);
+    width: calc(55% - 1vw);
     height: 100%;
     border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
-     background-image: url('@/assets/WeatherBackground/Clear1.jpg');
+     background-image: url('@/assets/WeatherBackground/Cloudy3.jpg');
      background-size:cover;
      background-repeat:no-repeat;
     overflow-y: auto;
@@ -121,19 +121,19 @@ export default {
     color: white;
 }
 .nav-color-1{
-  background: linear-gradient(to bottom,rgba(227, 160, 25, 0.5),rgba(155, 138, 115, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 0, 0, 0.5),rgba(128, 128, 128, 0.5));
 }
 .nav-color-2{
   background: linear-gradient(to bottom,rgba(0, 221, 255, 0.5),rgba(179, 219, 220, 0.5));
 }
 .nav-color-3{
-  background: linear-gradient(to bottom,rgba(0, 128, 255, 0.8),rgba(73, 190, 248, 0.8));
+  background: linear-gradient(to bottom,rgba(0, 128, 255, 0.5),rgba(73, 190, 248, 0.5));
 }
 .nav-color-4{
-  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.8),rgba(0, 183, 255, 0.8));
+  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.5),rgba(0, 183, 255, 0.5));
 }
 .nav-color-5{
-  background: linear-gradient(to bottom,rgba(20, 141, 240, 0.5),rgba(248, 215, 133, 0.5));
+  background: linear-gradient(to bottom,rgba(20, 141, 240, 0.5),rgba(133, 239, 237, 0.5));
 }
 .nav-color-6{
   background: linear-gradient(to bottom,rgba(246, 173, 110, 0.685),rgba(155, 138, 115, 0.5));

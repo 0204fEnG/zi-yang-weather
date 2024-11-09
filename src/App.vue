@@ -16,11 +16,11 @@ export default {
 
 <style scoped>
    #app {
-    width: 80vw;
+    width: 100vw;
     height: 100vh;
-    margin: 0 10vw;
+    /* margin: 0 10vw; */
     padding: 1vw;
-    border-radius:calc(2.5vh + 1vw);
+    /* border-radius:calc(2.5vh + 1vw); */
    display: flex;
    flex-direction: row;
    flex-wrap: wrap; /* 允许子项换行 */

@@ -95,9 +95,9 @@ export default {
 </script>
 <style scoped>
 #map-container {
-  width: 50%;
+  width: 45%;
   /* height: 75%; */
-  height: 39vw;
+  height: 30vw;
   border-radius:2.5vh;
   margin-right: 1vw;
 }
@@ -110,7 +110,7 @@ export default {
   #map-container{
     width: 98vw;
     /* aspect-ratio: 1; */
-    height: 98vw;
+    height: 49vw;
     margin-right:0;
     margin-bottom: 1vw;
   }
