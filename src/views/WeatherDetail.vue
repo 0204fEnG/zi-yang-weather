@@ -1,6 +1,6 @@
 <template>
 <div id="weather-detail">
-  <div class="country country1-color-1">
+  <div class="country country1-color-7">
     <div>{{currentCountryName}}</div>
     <div class="left">&lt;</div>
     <div class="right">&gt;</div>
@@ -14,7 +14,7 @@
   <AirQuality></AirQuality>
   <Disaster></Disaster>
   </div>
-  <div class="country-manage country2-color-1"></div>
+  <div class="country-manage country2-color-7"></div>
 </div>
 </template>
 
@@ -118,10 +118,10 @@ export default {
 background: linear-gradient(to bottom,rgba(179,219,220,0.5),rgba(255, 255, 255, 0.5));
 }
 .country1-color-3{
-background: linear-gradient(to bottom,rgba(73,190,248,0.5),rgba(185, 225, 246, 0.5));
+background: linear-gradient(to bottom,rgba(73,190,248,0.5),rgba(157, 214, 244, 0.5));
 }
 .country1-color-4{
-background: linear-gradient(to bottom,rgba(0,183,255,0.5),rgb(147, 226, 244,0.5));
+background: linear-gradient(to bottom,rgba(0, 149, 255, 0.5),rgba(56, 219, 255, 0.5));
 }
 .country1-color-5{
 background: linear-gradient(to bottom,rgba(133, 239, 237, 0.5),rgb(255, 255, 255,0.5));
@@ -130,7 +130,7 @@ background: linear-gradient(to bottom,rgba(133, 239, 237, 0.5),rgb(255, 255, 255
 background: linear-gradient(to bottom,rgba(155, 138, 115, 0.5),rgb(128, 128, 128,0.5));
 }
 .country1-color-7{
-background: linear-gradient(to bottom,rgba(91, 74, 247, 0.5),rgba(116, 172, 241, 0.5));
+background: linear-gradient(to bottom,rgba(34, 79, 244, 0.5),rgba(104, 170, 250, 0.5));
 }
 
 .country2-color-1{
@@ -140,18 +140,18 @@ background: linear-gradient(to bottom,rgba(91, 74, 247, 0.5),rgba(116, 172, 241,
   background: linear-gradient(to bottom,rgba(255, 255, 255, 0.5),rgba(83, 211, 240, 0.5));
 }
 .country2-color-3{
-  background:linear-gradient(to bottom,rgb(185, 255, 246,0.5),rgba(57, 163, 245, 0.5));
+  background:linear-gradient(to bottom,rgba(128, 221, 245, 0.5),rgba(44, 153, 237, 0.5));
 }
 .country2-color-4{
-  background: linear-gradient(to bottom,rgb(147,226,244,0.5),rgb(72, 146, 236,0.5));
+  background: linear-gradient(to bottom,rgba(48, 186, 255, 0.5),rgba(25, 82, 239, 0.5));
 }
 .country2-color-5{
   background: linear-gradient(to bottom,rgb(255, 255, 255,0.5),rgba(4, 152, 216, 0.5));
 }
 .country2-color-6{
-  background: linear-gradient(to bottom,rgb(128, 128, 128,0.5),rgba(244, 142, 95, 0.5));
+  background: linear-gradient(to bottom,rgb(128, 128, 128,0.5),rgba(239, 149, 107, 0.5));
 }
 .country2-color-7{
-  background: linear-gradient(to bottom,rgba(116, 172, 241, 0.5),rgb(47, 50, 246,0.5));
+  background: linear-gradient(to bottom,rgba(21, 122, 245, 0.5),rgba(0, 0, 0, 0.5));
 }
 </style>

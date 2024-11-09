@@ -1,6 +1,6 @@
 <template>
   <div id="weather-container" ref="weatherContainer">
-    <div class="weather-nav nav-color-1">
+    <div class="weather-nav nav-color-7">
         <div class="router-link"  @click="linkClick('/weather')" @mouseover="currentHoverLink='/weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/weather'||isActiveLink('/weather')}">天气</div>
         <div class="router-link"  @click="linkClick('/assistant')" @mouseover="currentHoverLink='/assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/assistant'||isActiveLink('/assistant')}">生活助手</div>
         <div class="router-link"  @click="linkClick('/setting')" @mouseover="currentHoverLink='/setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/setting'||isActiveLink('/setting')}">设置</div>
@@ -89,7 +89,7 @@ export default {
     height: 100%;
     border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
-     background-image: url('@/assets/WeatherBackground/Cloudy3.jpg');
+     background-image: url('@/assets/WeatherBackground/LightRain1.jpg');
      background-size:cover;
      background-repeat:no-repeat;
     overflow-y: auto;
@@ -130,16 +130,16 @@ export default {
   background: linear-gradient(to bottom,rgba(0, 128, 255, 0.5),rgba(73, 190, 248, 0.5));
 }
 .nav-color-4{
-  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.5),rgba(0, 183, 255, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 68, 255, 0.5),rgba(0, 149, 255, 0.5));
 }
 .nav-color-5{
-  background: linear-gradient(to bottom,rgba(20, 141, 240, 0.5),rgba(133, 239, 237, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 143, 253, 0.5),rgba(133, 239, 237, 0.5));
 }
 .nav-color-6{
-  background: linear-gradient(to bottom,rgba(246, 173, 110, 0.685),rgba(155, 138, 115, 0.5));
+  background: linear-gradient(to bottom,rgba(246, 173, 110, 0.5),rgba(155, 138, 115, 0.5));
 }
 .nav-color-7{
-  background: linear-gradient(to bottom,rgba(0, 0, 0, 0.5),rgba(91, 74, 247, 0.5));
+  background: linear-gradient(to bottom,rgba(0, 0, 0, 0.5),rgba(34, 79, 244, 0.5));
 }
 @media (max-aspect-ratio: 1){
     #weather-container{
