@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { getCurrentWeather } from '@/api/modules/weather'
 export default {
   name: 'LifeAssistant',
   data () {
@@ -16,9 +15,8 @@ export default {
     this.initCurrent()
   },
   methods: {
-    async initCurrent () {
+    initCurrent () {
       console.log('开始获取cur')
-      this.weatherinfo = await getCurrentWeather({ location: 101010100 })
     }
   }
 }
