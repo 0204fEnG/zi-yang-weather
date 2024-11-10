@@ -1,11 +1,12 @@
 <template>
 <div id="weather-detail">
   <div class="country country1-color-7">
-    <div>{{this.current.name}}</div>
+    <div>{{current.name}}</div>
     <div class="left">&lt;</div>
     <div class="right">&gt;</div>
   </div>
   <div class="detail">
+  <div class="test">{{this.current}}</div>
   <WeatherCountry></WeatherCountry>
   <Precipitation></Precipitation>
   <Weather24Hours></Weather24Hours>
@@ -53,8 +54,15 @@ export default {
         nowIndex: null,
         days3Index: null,
         disaster: null,
-        sun: {},
-        moon: {}
+        sun: {
+          rise: null,
+          set: null
+        },
+        moon: {
+          rise: null,
+          set: null,
+          phase: null
+        }
       },
       favourite: []
     }
@@ -105,20 +113,20 @@ export default {
     },
     async initCurrent () {
       console.log('开始获取cur')
-      this.current.name = await this.getCountryInfo(this.currentLat).data.location[0].name
+      this.current.name = await this.getCountryInfo(this.currentLat)
       const tempNowWeather = await this.getNowWeather(this.currentLat)
       this.current.updateTime = tempNowWeather.data.updateTime
       this.current.nowWeather = tempNowWeather.data.now
-      this.current.hours24Weather = await this.get24HoursWeather(this.currentLat).data.hourly
-      this.current.days7Weather = await this.get7DaysWeather(this.currentLat).data.daily
-      this.current.hours2Rain = await this.get2HoursRain(this.currentLat).data.minutely
-      this.current.nowAirQuality = await this.getNowAirQuality(this.currentLat).data.indexes
-      this.current.hours24AirQuality = await this.get24HoursAirQuality(this.currentLat).data.hours
-      this.current.days3AirQuality = await this.get3DaysAirQuality(this.currentLat).data.days
-      this.current.nowIndex = await this.getNowIndex(this.currentLat).data.daily
-      const tempDays3Index = await this.get3DaysIndex(this.currentLat).data.daily
+      this.current.hours24Weather = await this.get24HoursWeather(this.currentLat)
+      this.current.days7Weather = await this.get7DaysWeather(this.currentLat)
+      this.current.hours2Rain = await this.get2HoursRain(this.currentLat)
+      this.current.nowAirQuality = await this.getNowAirQuality(this.currentLat)
+      this.current.hours24AirQuality = await this.get24HoursAirQuality(this.currentLat)
+      this.current.days3AirQuality = await this.get3DaysAirQuality(this.currentLat)
+      this.current.nowIndex = await this.getNowIndex(this.currentLat)
+      const tempDays3Index = await this.get3DaysIndex(this.currentLat)
       this.current.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
-      this.current.disaster = await this.getDisaster(this.currentLat).data.warning
+      this.current.disaster = await this.getDisaster(this.currentLat)
       const tempSun = await this.getSun(this.currentLat)
       this.current.sun.rise = tempSun.data.sunrise
       this.current.sun.set = tempSun.data.sunset
@@ -133,7 +141,7 @@ export default {
     async getCountryInfo (lat) {
       console.log('开始获取当前城市位置')
       const countryInfo = await weatherApi.getCurrentCountry({ location: `${lat.longitude},${lat.latitude}` })
-      return countryInfo
+      return countryInfo.data.location[0].name
     },
     async getNowWeather (lat) {
       console.log('开始获取城市当前天气')
@@ -143,47 +151,47 @@ export default {
     async get24HoursWeather (lat) {
       console.log('开始获取城市未来24小时天气')
       const hours24Weather = await weatherApi.get24HoursWeather({ location: `${lat.longitude},${lat.latitude}` })
-      return hours24Weather
+      return hours24Weather.data.hourly
     },
     async get7DaysWeather (lat) {
       console.log('开始获取城市未来7天天气')
       const days7Weather = await weatherApi.get7DaysWeather({ location: `${lat.longitude},${lat.latitude}` })
-      return days7Weather
+      return days7Weather.data.daily
     },
     async get2HoursRain (lat) {
       console.log('开始获取城市未来2小时降雨/雪')
       const hours2Rain = await weatherApi.get2HoursRain({ location: `${lat.longitude},${lat.latitude}` })
-      return hours2Rain
+      return hours2Rain.data.minutely
     },
     async getNowAirQuality (lat) {
       console.log('开始获取城市当前空气质量')
       const nowAirQuality = await weatherApi.getCurrentAirQuality(lat.latitude, lat.longitude)
-      return nowAirQuality
+      return nowAirQuality.data.indexes
     },
     async get24HoursAirQuality (lat) {
       console.log('开始获取城市未来24小时空气质量')
       const hours24AirQuality = await weatherApi.get24HoursAirQuality(lat.latitude, lat.longitude)
-      return hours24AirQuality
+      return hours24AirQuality.data.hours
     },
     async get3DaysAirQuality (lat) {
       console.log('开始获取城市未来3天空气质量')
       const days3AirQuality = await weatherApi.get3DaysAirQuality(lat.latitude, lat.longitude)
-      return days3AirQuality
+      return days3AirQuality.data.days
     },
     async getNowIndex (lat) {
       console.log('开始获取城市当前天气指数')
       const nowIndex = await weatherApi.getCurrentIndex(`${lat.longitude},${lat.latitude}`)
-      return nowIndex
+      return nowIndex.data.daily
     },
     async get3DaysIndex (lat) {
       console.log('开始获取城市未来3天天气指数')
       const days3Index = await weatherApi.get3DaysIndex(`${lat.longitude},${lat.latitude}`)
-      return days3Index
+      return days3Index.data.daily
     },
     async getDisaster (lat) {
       console.log('开始获取城市实时灾害预警')
       const disaster = await weatherApi.getCurrentDisaster(`${lat.longitude},${lat.latitude}`)
-      return disaster
+      return disaster.data.warning
     },
     async getSun (lat) {
       console.log('开始获取城市日出日落时间')
@@ -206,6 +214,11 @@ export default {
     /* border-radius:10px; */
     background-size:cover;
     background-repeat: no-repeat;
+}
+.test{
+  width: 100%;
+  height: auto;
+  background-color: beige;
 }
 .detail{
   width: 100%;
