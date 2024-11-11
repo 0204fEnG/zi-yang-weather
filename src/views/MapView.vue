@@ -1,7 +1,10 @@
 <template>
+<div id="map">
   <div id="map-container">
     <div id="map-view"></div>
   </div>
+  <div class="tools-bar">hello!this is toolbar!</div>
+</div>
 </template>
 <script>
 import AMapLoader from '@amap/amap-jsapi-loader'
@@ -94,23 +97,34 @@ export default {
 }
 </script>
 <style scoped>
-#map-container {
+#map{
   width: 45%;
-  /* height: 75%; */
-  height: 30vw;
+  height: 100%;
   border-radius:2.5vh;
   margin-right: 1vw;
+}
+#map-container {
+  width: 100%;
+  height: 60%;
+  border-radius: 2.5vh;
+  margin-bottom:1vw;
 }
 #map-view{
   width: 100%;
   height: 100%;
   border-radius: 2.5vh;
 }
+.tools-bar{
+  text-align: center;
+  width: 100%;
+  height: calc(40% - 1vw);
+  border-radius: 2.5vh;
+  background-color: rgb(128, 128, 128,0.25);
+}
 @media (max-aspect-ratio: 1){
-  #map-container{
-    width: 98vw;
-    /* aspect-ratio: 1; */
-    height: 49vw;
+  #map{
+    width: 100%;
+    height: 40vh;
     margin-right:0;
     margin-bottom: 1vw;
   }

@@ -2,11 +2,13 @@
 <div id="weather-detail">
   <div class="country country1-color-7">
     <div>{{current.name}}</div>
-    <div class="left">&lt;</div>
-    <div class="right">&gt;</div>
+    <div class="left" @click="buttonLeft">&lt;</div>
+    <div class="right" @click="buttonRight">&gt;</div>
   </div>
+  <div class="detail-container">
+    <div class="detail-container2">
   <div class="detail">
-  <div class="test">{{this.current}}</div>
+  <!-- <div class="test">{{this.current}}</div> -->
   <WeatherCountry></WeatherCountry>
   <Precipitation></Precipitation>
   <Weather24Hours></Weather24Hours>
@@ -14,6 +16,18 @@
   <CorrelationIndex></CorrelationIndex>
   <AirQuality></AirQuality>
   <Disaster></Disaster>
+  </div>
+   <div class="detail">
+  <!-- <div class="test">{{this.current}}</div> -->
+  <WeatherCountry></WeatherCountry>
+  <Precipitation></Precipitation>
+  <Weather24Hours></Weather24Hours>
+  <Weather7Days></Weather7Days>
+  <CorrelationIndex></CorrelationIndex>
+  <AirQuality></AirQuality>
+  <Disaster></Disaster>
+   </div>
+  </div>
   </div>
   <div class="country-manage country2-color-7"></div>
 </div>
@@ -41,6 +55,7 @@ export default {
   name: 'WeatherDetail',
   data () {
     return {
+      detailContainerTranslateX: 0,
       current: {
         name: null,
         updateTime: null,
@@ -68,7 +83,13 @@ export default {
     }
   },
   created () {
-    this.init()
+    // this.init()
+  },
+  mounted () {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.handleResize)
   },
   computed: {
     currentLat () {
@@ -82,6 +103,25 @@ export default {
     }
   },
   methods: {
+    handleResize () {
+      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
+    },
+    buttonLeft () {
+      if (this.detailContainerTranslateX === 0) return
+      this.detailContainerTranslateX--
+      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
+    },
+    buttonRight () {
+      if (this.detailContainerTranslateX === 1) return
+      this.detailContainerTranslateX++
+      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
+    },
+    detailContainerWidth () {
+      return document.querySelector('.detail').offsetWidth
+    },
+    detailContainerTransform () {
+      return document.querySelector('.detail-container2')
+    },
     splitArrayIntoChunks (array, chunkSize) {
       const chunks = []
       for (let i = 0; i < array.length; i += chunkSize) {
@@ -211,20 +251,25 @@ export default {
 #weather-detail{
     width: 100%;
     height: auto;
-    /* border-radius:10px; */
-    background-size:cover;
-    background-repeat: no-repeat;
 }
-.test{
+.detail-container{
   width: 100%;
   height: auto;
-  background-color: beige;
+  overflow: hidden;
+}
+.detail-container2{
+  width: 100%;
+  height: auto;
+  display: flex;
+  transform:translateX(0);
+  flex-direction: row;
+  overflow: visible;
+  transition:transform 0.2s ease-in-out;
 }
 .detail{
-  width: 100%;
+  flex:0 0 100%;
   height: auto;
   padding: 0 1vh;
-  overflow: auto;
 }
 .country{
   position: sticky;
@@ -317,4 +362,9 @@ background: linear-gradient(to bottom,rgba(34, 79, 244, 0.5),rgba(104, 170, 250,
 .country2-color-7{
   background: linear-gradient(to bottom,rgba(21, 122, 245, 0.5),rgba(0, 0, 0, 0.5));
 }
+/* @media (max-aspect-ratio: 1){
+  .detail{
+    flex:0 0 100vw;
+  }
+} */
 </style>
