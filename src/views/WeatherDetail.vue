@@ -5,28 +5,16 @@
     <div class="left" @click="buttonLeft">&lt;</div>
     <div class="right" @click="buttonRight">&gt;</div>
   </div>
-  <div class="detail-container">
-    <div class="detail-container2">
-  <div class="detail">
+    <div class="detail-container" ref="detailContainer">
+  <div class="detail" v-for="item in items" :key="item.id">
   <!-- <div class="test">{{this.current}}</div> -->
   <WeatherCountry></WeatherCountry>
-  <Precipitation></Precipitation>
+  <Precipitation :echarts="echarts"></Precipitation>
   <Weather24Hours></Weather24Hours>
-  <Weather7Days></Weather7Days>
+  <Weather7Days :echarts="echarts"></Weather7Days>
   <CorrelationIndex></CorrelationIndex>
   <AirQuality></AirQuality>
   <Disaster></Disaster>
-  </div>
-   <div class="detail">
-  <!-- <div class="test">{{this.current}}</div> -->
-  <WeatherCountry></WeatherCountry>
-  <Precipitation></Precipitation>
-  <Weather24Hours></Weather24Hours>
-  <Weather7Days></Weather7Days>
-  <CorrelationIndex></CorrelationIndex>
-  <AirQuality></AirQuality>
-  <Disaster></Disaster>
-   </div>
   </div>
   </div>
   <div class="country-manage country2-color-7"></div>
@@ -42,6 +30,7 @@ import Precipitation from '@/components/Precipitation'
 import AirQuality from '@/components/AirQuality'
 import Disaster from '@/components/Disaster'
 import * as weatherApi from '@/api/modules/weather'
+import echarts from '@/utils/echartsSetup.js'
 export default {
   components: {
     WeatherCountry,
@@ -55,7 +44,9 @@ export default {
   name: 'WeatherDetail',
   data () {
     return {
-      detailContainerTranslateX: 0,
+      echarts,
+      items: [{ id: 1 }, { id: 2 }],
+      detailWidth: null,
       current: {
         name: null,
         updateTime: null,
@@ -86,6 +77,7 @@ export default {
     // this.init()
   },
   mounted () {
+    this.handleResize()
     window.addEventListener('resize', this.handleResize)
   },
   beforeDestroy () {
@@ -104,23 +96,19 @@ export default {
   },
   methods: {
     handleResize () {
-      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
+      this.detailWidth = this.$refs.detailContainer.querySelector('.detail').clientWidth
     },
     buttonLeft () {
-      if (this.detailContainerTranslateX === 0) return
-      this.detailContainerTranslateX--
-      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
+      this.$refs.detailContainer.scrollBy({
+        left: -this.detailWidth,
+        behavior: 'smooth'
+      })
     },
     buttonRight () {
-      if (this.detailContainerTranslateX === 1) return
-      this.detailContainerTranslateX++
-      this.detailContainerTransform().style.transform = `translateX(${-1 * this.detailContainerTranslateX * this.detailContainerWidth()}px)`
-    },
-    detailContainerWidth () {
-      return document.querySelector('.detail').offsetWidth
-    },
-    detailContainerTransform () {
-      return document.querySelector('.detail-container2')
+      this.$refs.detailContainer.scrollBy({
+        left: this.detailWidth,
+        behavior: 'smooth'
+      })
     },
     splitArrayIntoChunks (array, chunkSize) {
       const chunks = []
@@ -255,21 +243,20 @@ export default {
 .detail-container{
   width: 100%;
   height: auto;
-  overflow: hidden;
-}
-.detail-container2{
-  width: 100%;
-  height: auto;
   display: flex;
-  transform:translateX(0);
   flex-direction: row;
-  overflow: visible;
-  transition:transform 0.2s ease-in-out;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.detail-container::-webkit-scrollbar{
+  display: none;
 }
 .detail{
   flex:0 0 100%;
   height: auto;
   padding: 0 1vh;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 .country{
   position: sticky;

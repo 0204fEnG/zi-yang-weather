@@ -95,7 +95,7 @@ export default {
     overflow-y: auto;
 }
 #weather-container::-webkit-scrollbar {
-    display: none; /* 隐藏滚动条 */
+    display: none;
 }
 .weather-nav{
     position:sticky;

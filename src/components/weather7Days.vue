@@ -66,24 +66,11 @@
 </template>
 
 <script>
-// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
-import * as echarts from 'echarts/core'
-// 引入柱状图图表，图表后缀都为 Chart
-import { LineChart } from 'echarts/charts'
-// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  DatasetComponent,
-  TransformComponent
-} from 'echarts/components'
-// 标签自动布局、全局过渡动画等特性
-import { LabelLayout, UniversalTransition } from 'echarts/features'
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import { CanvasRenderer } from 'echarts/renderers'
 export default {
   name: 'Weather7Days',
+  props: {
+    echarts: Object
+  },
   data () {
     return {
       days7: [[26, 28, 26, 24, 25, 28, 29], [20, 20, 19, 20, 21, 23, 23]]
@@ -110,21 +97,10 @@ export default {
       }
     },
     init7Days () {
-      echarts.use([
-        TitleComponent,
-        TooltipComponent,
-        GridComponent,
-        DatasetComponent,
-        TransformComponent,
-        LineChart,
-        LabelLayout,
-        UniversalTransition,
-        CanvasRenderer
-      ])
       // 接下来的使用就跟之前一样，初始化图表，设置配置项
       const minData = Math.min(...this.days7[1])
       const maxData = Math.max(...this.days7[0])
-      const myChart7Days = echarts.init(document.querySelector('.days-chart'))
+      const myChart7Days = this.echarts.init(document.querySelector('.days-chart'))
       myChart7Days.setOption({
         xAxis: {
           type: 'category',
