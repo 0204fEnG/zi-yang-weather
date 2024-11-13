@@ -7,7 +7,7 @@
   </div>
   <div class="detail-container" ref="detailContainer">
   <div class="detail" v-for="country in countries" :key="country.id">
-  <WeatherCountry></WeatherCountry>
+  <WeatherCountry :headData="{updateTime:country.updateTime}"></WeatherCountry>
   <Precipitation :echarts="echarts"></Precipitation>
   <Weather24Hours></Weather24Hours>
   <Weather7Days :echarts="echarts"></Weather7Days>
@@ -130,34 +130,41 @@ export default {
     async getInfo (location) {
       const info = {
         name: null,
-        updateTime: null,
-        nowWeather: null,
-        hours24Weather: null,
-        days7Weather: null,
-        hours2Rain: null,
-        nowAirQuality: null,
-        hours24AirQuality: null,
-        days3AirQuality: null,
-        nowIndex: null,
-        days3Index: null,
-        disaster: null,
-        sun: {
-          rise: null,
-          set: null
-        },
-        moon: {
-          rise: null,
-          set: null,
-          phase: null
-        }
+        weatherCountry: {},
+        precipitation: {},
+        weather24Hours: {},
+        weather7Days: {},
+        correlationIndex: {},
+        airQuality: {},
+        disaster: {}
       }
       info.name = await this.getCountryInfo(location)
       const tempNowWeather = await this.getNowWeather()
-      info.updateTime = tempNowWeather.data.updateTime
-      info.nowWeather = tempNowWeather.data.now
-      info.hours24Weather = await this.get24HoursWeather(location)
-      info.days7Weather = await this.get7DaysWeather(location)
-      info.hours2Rain = await this.get2HoursRain(location)
+      info.weatherCountry.updateTime = tempNowWeather.data.updateTime
+      info.weatherCountry.nowTemp = tempNowWeather.data.now.temp
+      info.weatherCountry.nowWeather = tempNowWeather.data.now.text
+      const temp24HoursWeather = await this.get24HoursWeather(location)
+      info.weather24Hours = []
+      for (const [, value] of temp24HoursWeather.entries()) {
+        const tempInfo = {}
+        tempInfo.temp = value.temp
+        tempInfo.text = value.text
+        info.weather24Hours.push(tempInfo)
+      }
+      const temp7DaysWeather = await this.get7DaysWeather(location)
+      info.weather7Days = []
+      for (const [, value] of temp7DaysWeather.entries()) {
+        const tempInfo = {}
+        tempInfo.date = value.fxDate
+        tempInfo.weather = value.textDay
+        tempInfo.tempMax = value.tempMax
+        tempInfo.tempMin = value.tempMin
+        tempInfo.text = value.text
+        info.weather24Hours.push(tempInfo)
+      }
+      const temp2HoursRain = await this.get2HoursRain(location)
+      info.precipitation.summary = temp2HoursRain.data.summary
+      info.precipitation.minutely = temp2HoursRain.data.minutely
       info.nowAirQuality = await this.getNowAirQuality(location)
       info.hours24AirQuality = await this.get24HoursAirQuality(location)
       info.days3AirQuality = await this.get3DaysAirQuality(location)
@@ -197,7 +204,7 @@ export default {
     async get2HoursRain (lat) {
       console.log('开始获取城市未来2小时降雨/雪')
       const hours2Rain = await weatherApi.get2HoursRain({ location: `${lat.longitude},${lat.latitude}` })
-      return hours2Rain.data.minutely
+      return hours2Rain
     },
     async getNowAirQuality (lat) {
       console.log('开始获取城市当前空气质量')
