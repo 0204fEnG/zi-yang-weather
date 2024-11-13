@@ -1,13 +1,12 @@
 <template>
 <div id="weather-detail">
   <div class="country country1-color-7">
-    <div>{{current.name}}</div>
+    <div>{{countries[currentIndex].name}}</div>
     <div class="left" @click="buttonLeft">&lt;</div>
     <div class="right" @click="buttonRight">&gt;</div>
   </div>
-    <div class="detail-container" ref="detailContainer">
-  <div class="detail" v-for="item in items" :key="item.id">
-  <!-- <div class="test">{{this.current}}</div> -->
+  <div class="detail-container" ref="detailContainer">
+  <div class="detail" v-for="country in countries" :key="country.id">
   <WeatherCountry></WeatherCountry>
   <Precipitation :echarts="echarts"></Precipitation>
   <Weather24Hours></Weather24Hours>
@@ -46,31 +45,9 @@ export default {
     return {
       echarts,
       items: [{ id: 1 }, { id: 2 }],
+      currentIndex: 0,
       detailWidth: null,
-      current: {
-        name: null,
-        updateTime: null,
-        nowWeather: null,
-        hours24Weather: null,
-        days7Weather: null,
-        hours2Rain: null,
-        nowAirQuality: null,
-        hours24AirQuality: null,
-        days3AirQuality: null,
-        nowIndex: null,
-        days3Index: null,
-        disaster: null,
-        sun: {
-          rise: null,
-          set: null
-        },
-        moon: {
-          rise: null,
-          set: null,
-          phase: null
-        }
-      },
-      favourite: []
+      countries: []
     }
   },
   created () {
@@ -90,7 +67,7 @@ export default {
     currentCountryinfo () {
       return this.$store.state.weather.currentCountry
     },
-    favouriteCountryinfo () {
+    favouriteLats () {
       return this.$store.state.weather.favouriteCountries
     }
   },
@@ -99,12 +76,14 @@ export default {
       this.detailWidth = this.$refs.detailContainer.querySelector('.detail').clientWidth
     },
     buttonLeft () {
+      this.currentIndex--
       this.$refs.detailContainer.scrollBy({
         left: -this.detailWidth,
         behavior: 'smooth'
       })
     },
     buttonRight () {
+      this.currentIndex++
       this.$refs.detailContainer.scrollBy({
         left: this.detailWidth,
         behavior: 'smooth'
@@ -136,35 +115,64 @@ export default {
       return formattedDate
     },
     async init () {
-      this.initCurrent()
-      this.initFavourite()
+      this.initCountries()
     },
-    async initCurrent () {
-      console.log('开始获取cur')
-      this.current.name = await this.getCountryInfo(this.currentLat)
-      const tempNowWeather = await this.getNowWeather(this.currentLat)
-      this.current.updateTime = tempNowWeather.data.updateTime
-      this.current.nowWeather = tempNowWeather.data.now
-      this.current.hours24Weather = await this.get24HoursWeather(this.currentLat)
-      this.current.days7Weather = await this.get7DaysWeather(this.currentLat)
-      this.current.hours2Rain = await this.get2HoursRain(this.currentLat)
-      this.current.nowAirQuality = await this.getNowAirQuality(this.currentLat)
-      this.current.hours24AirQuality = await this.get24HoursAirQuality(this.currentLat)
-      this.current.days3AirQuality = await this.get3DaysAirQuality(this.currentLat)
-      this.current.nowIndex = await this.getNowIndex(this.currentLat)
-      const tempDays3Index = await this.get3DaysIndex(this.currentLat)
-      this.current.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
-      this.current.disaster = await this.getDisaster(this.currentLat)
-      const tempSun = await this.getSun(this.currentLat)
-      this.current.sun.rise = tempSun.data.sunrise
-      this.current.sun.set = tempSun.data.sunset
-      const tempMoon = await this.getMoon(this.currentLat)
-      this.current.moon.rise = tempMoon.data.moonrise
-      this.current.moon.set = tempMoon.data.moonset
-      this.current.moon.phase = tempMoon.data.moonPhase
+    async initCountries () {
+      const tempInfo = await this.getInfo(this.currentLat)
+      tempInfo.id = 0
+      this.countries.push(tempInfo)
+      for (const [index, value] of this.favouriteLats.entries()) {
+        const tempInfo = await this.getInfo(value)
+        tempInfo.id = index + 1
+        this.countries.push(tempInfo)
+      }
     },
-    async initFavourite () {
-      console.log('开始获取fav')
+    async getInfo (location) {
+      const info = {
+        name: null,
+        updateTime: null,
+        nowWeather: null,
+        hours24Weather: null,
+        days7Weather: null,
+        hours2Rain: null,
+        nowAirQuality: null,
+        hours24AirQuality: null,
+        days3AirQuality: null,
+        nowIndex: null,
+        days3Index: null,
+        disaster: null,
+        sun: {
+          rise: null,
+          set: null
+        },
+        moon: {
+          rise: null,
+          set: null,
+          phase: null
+        }
+      }
+      info.name = await this.getCountryInfo(location)
+      const tempNowWeather = await this.getNowWeather()
+      info.updateTime = tempNowWeather.data.updateTime
+      info.nowWeather = tempNowWeather.data.now
+      info.hours24Weather = await this.get24HoursWeather(location)
+      info.days7Weather = await this.get7DaysWeather(location)
+      info.hours2Rain = await this.get2HoursRain(location)
+      info.nowAirQuality = await this.getNowAirQuality(location)
+      info.hours24AirQuality = await this.get24HoursAirQuality(location)
+      info.days3AirQuality = await this.get3DaysAirQuality(location)
+      info.nowIndex = await this.getNowIndex(location)
+      const tempDays3Index = await this.get3DaysIndex(location)
+      info.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
+      info.disaster = await this.getDisaster(location)
+      const tempSun = await this.getSun(location)
+      info.sun.rise = tempSun.data.sunrise
+      info.sun.set = tempSun.data.sunset
+      const tempMoon = await this.getMoon(location)
+      info.moon.rise = tempMoon.data.moonrise
+      info.moon.set = tempMoon.data.moonset
+      info.moon.phase = tempMoon.data.moonPhase
+      return info
     },
     async getCountryInfo (lat) {
       console.log('开始获取当前城市位置')

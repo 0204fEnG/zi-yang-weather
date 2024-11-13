@@ -5,7 +5,7 @@
     <div class="temp-bottom">24°C/12°C</div>
   </div>
   <div class="weather">阴&nbsp;</div>
-  <div class="air-qualit">&nbsp;良好</div>
+  <div class="air-quality">&nbsp;良好</div>
   <div class="obs-time">最后更新时间：2024-10-30 19：32</div>
 </div>
 </template>
@@ -86,7 +86,7 @@ export default {
   line-height: 3vh;
   /* background-color: rgb(188, 188, 101); */
 }
-.air-qualit{
+.air-quality{
   font-size: 2vh;
   height: 3vh;
   color:white;
