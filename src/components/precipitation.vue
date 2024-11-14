@@ -106,7 +106,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .precipitation{
     width: 100%;
     border-radius:2.5vh;

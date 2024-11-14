@@ -1,13 +1,13 @@
 <template>
 <div id="weather-detail">
   <div class="country country1-color-7">
-    <div>{{countries[currentIndex].name}}</div>
+    <div>{{countries[this.currentIndex].name}}</div>
     <div class="left" @click="buttonLeft">&lt;</div>
     <div class="right" @click="buttonRight">&gt;</div>
   </div>
   <div class="detail-container" ref="detailContainer">
   <div class="detail" v-for="country in countries" :key="country.id">
-  <WeatherCountry :headData="{updateTime:country.updateTime}"></WeatherCountry>
+  <WeatherCountry :weatherCountry="country.weatherCountry"></WeatherCountry>
   <Precipitation :echarts="echarts"></Precipitation>
   <Weather24Hours></Weather24Hours>
   <Weather7Days :echarts="echarts"></Weather7Days>
@@ -44,14 +44,23 @@ export default {
   data () {
     return {
       echarts,
-      items: [{ id: 1 }, { id: 2 }],
       currentIndex: 0,
-      detailWidth: null,
+      savedScrollPosition: 0,
+      detailWidth: 1010,
       countries: []
     }
   },
+  activated () {
+    this.$refs.detailContainer.scrollTo({
+      left: this.currentIndex * this.detailWidth,
+      behavior: 'auto'
+    })
+  },
+  deactivated () {
+  },
   created () {
-    // this.init()
+    this.init()
+    this.buttonScroll = this.throttle(this.detailScroll, 500)
   },
   mounted () {
     this.handleResize()
@@ -73,21 +82,37 @@ export default {
   },
   methods: {
     handleResize () {
-      this.detailWidth = this.$refs.detailContainer.querySelector('.detail').clientWidth
+      this.$nextTick(() => {
+        const detailElement = this.$refs.detailContainer.querySelector('.detail')
+        if (detailElement) {
+          this.detailWidth = detailElement.clientWidth
+        }
+      })
+    },
+    throttle (func, limit) {
+      let inThrottle = false
+      return function (index) {
+        if (!inThrottle) {
+          func(index)
+          inThrottle = true
+          setTimeout(() => { inThrottle = false }, limit)
+        }
+      }
+    },
+    detailScroll (index) {
+      this.currentIndex += index
+      this.$refs.detailContainer.scrollBy({
+        left: index * this.detailWidth,
+        behavior: 'smooth'
+      })
     },
     buttonLeft () {
-      this.currentIndex--
-      this.$refs.detailContainer.scrollBy({
-        left: -this.detailWidth,
-        behavior: 'smooth'
-      })
+      if (this.currentIndex === 0) return
+      this.buttonScroll(-1)
     },
     buttonRight () {
-      this.currentIndex++
-      this.$refs.detailContainer.scrollBy({
-        left: this.detailWidth,
-        behavior: 'smooth'
-      })
+      if (this.currentIndex === this.countries.length - 1) return
+      this.buttonScroll(1)
     },
     splitArrayIntoChunks (array, chunkSize) {
       const chunks = []
@@ -139,46 +164,49 @@ export default {
         disaster: {}
       }
       info.name = await this.getCountryInfo(location)
-      const tempNowWeather = await this.getNowWeather()
+      const tempNowWeather = await this.getNowWeather(location)
       info.weatherCountry.updateTime = tempNowWeather.data.updateTime
       info.weatherCountry.nowTemp = tempNowWeather.data.now.temp
       info.weatherCountry.nowWeather = tempNowWeather.data.now.text
-      const temp24HoursWeather = await this.get24HoursWeather(location)
-      info.weather24Hours = []
-      for (const [, value] of temp24HoursWeather.entries()) {
-        const tempInfo = {}
-        tempInfo.temp = value.temp
-        tempInfo.text = value.text
-        info.weather24Hours.push(tempInfo)
-      }
+      // const temp24HoursWeather = await this.get24HoursWeather(location)
+      // info.weather24Hours = []
+      // for (const [, value] of temp24HoursWeather.entries()) {
+      //   const tempInfo = {}
+      //   tempInfo.temp = value.temp
+      //   tempInfo.text = value.text
+      //   info.weather24Hours.push(tempInfo)
+      // }
       const temp7DaysWeather = await this.get7DaysWeather(location)
-      info.weather7Days = []
-      for (const [, value] of temp7DaysWeather.entries()) {
-        const tempInfo = {}
-        tempInfo.date = value.fxDate
-        tempInfo.weather = value.textDay
-        tempInfo.tempMax = value.tempMax
-        tempInfo.tempMin = value.tempMin
-        tempInfo.text = value.text
-        info.weather24Hours.push(tempInfo)
-      }
-      const temp2HoursRain = await this.get2HoursRain(location)
-      info.precipitation.summary = temp2HoursRain.data.summary
-      info.precipitation.minutely = temp2HoursRain.data.minutely
-      info.nowAirQuality = await this.getNowAirQuality(location)
-      info.hours24AirQuality = await this.get24HoursAirQuality(location)
-      info.days3AirQuality = await this.get3DaysAirQuality(location)
-      info.nowIndex = await this.getNowIndex(location)
-      const tempDays3Index = await this.get3DaysIndex(location)
-      info.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
-      info.disaster = await this.getDisaster(location)
-      const tempSun = await this.getSun(location)
-      info.sun.rise = tempSun.data.sunrise
-      info.sun.set = tempSun.data.sunset
-      const tempMoon = await this.getMoon(location)
-      info.moon.rise = tempMoon.data.moonrise
-      info.moon.set = tempMoon.data.moonset
-      info.moon.phase = tempMoon.data.moonPhase
+      info.weatherCountry.tempMax = temp7DaysWeather[0].tempMax
+      info.weatherCountry.tempMin = temp7DaysWeather[0].tempMin
+      // info.weather7Days = []
+      // for (const [, value] of temp7DaysWeather.entries()) {
+      //   const tempInfo = {}
+      //   tempInfo.date = value.fxDate
+      //   tempInfo.weather = value.textDay
+      //   tempInfo.tempMax = value.tempMax
+      //   tempInfo.tempMin = value.tempMin
+      //   tempInfo.text = value.text
+      //   info.weather24Hours.push(tempInfo)
+      // }
+      // const temp2HoursRain = await this.get2HoursRain(location)
+      // info.precipitation.summary = temp2HoursRain.data.summary
+      // info.precipitation.minutely = temp2HoursRain.data.minutely
+      const tempNowAirQuality = await this.getNowAirQuality(location)
+      info.weatherCountry.nowAirQuality = tempNowAirQuality[0].category
+      // info.hours24AirQuality = await this.get24HoursAirQuality(location)
+      // info.days3AirQuality = await this.get3DaysAirQuality(location)
+      // info.nowIndex = await this.getNowIndex(location)
+      // const tempDays3Index = await this.get3DaysIndex(location)
+      // info.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
+      // info.disaster = await this.getDisaster(location)
+      // const tempSun = await this.getSun(location)
+      // info.sun.rise = tempSun.data.sunrise
+      // info.sun.set = tempSun.data.sunset
+      // const tempMoon = await this.getMoon(location)
+      // info.moon.rise = tempMoon.data.moonrise
+      // info.moon.set = tempMoon.data.moonset
+      // info.moon.phase = tempMoon.data.moonPhase
       return info
     },
     async getCountryInfo (lat) {

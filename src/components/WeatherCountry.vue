@@ -1,21 +1,42 @@
 <template>
 <div class="weather-country">
   <div class="temperature">
-    <div class="temp-top">22</div>
-    <div class="temp-bottom">24°C/12°C</div>
+    <div class="temp-top">{{weatherCountry.nowTemp}}</div>
+    <div class="temp-bottom">{{weatherCountry.tempMax}}℃/{{weatherCountry.tempMin}}℃</div>
   </div>
-  <div class="weather">阴&nbsp;</div>
-  <div class="air-quality">&nbsp;良好</div>
-  <div class="obs-time">最后更新时间：2024-10-30 19：32</div>
+  <div class="weather">{{weatherCountry.nowWeather}}&nbsp;</div>
+  <div class="air-quality">&nbsp;{{weatherCountry.nowAirQuality}}</div>
+  <div class="obs-time">最后更新时间:{{updateTime}}</div>
 </div>
 </template>
 
 <script>
 export default {
   name: 'WeatherCountry',
+  props: {
+    weatherCountry: Object
+  },
   data () {
     return {
       text: 'hello!'
+    }
+  },
+  computed: {
+    updateTime () {
+      return this.formatISODate(this.weatherCountry.updateTime)
+    }
+  },
+  methods: {
+    formatISODate (isoDate) {
+      const date = new Date(isoDate)
+      const month = date.getMonth() + 1 // getMonth() 返回0-11，因此需要加1
+      const day = date.getDate()
+      const hours = date.getHours()
+      const minutes = date.getMinutes()
+
+      // 使用padStart确保月份和日期始终是两位数
+      const formattedDate = `${month.toString().padStart(2, '0')}月${day.toString().padStart(2, '0')}日 ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
+      return formattedDate
     }
   }
 }
