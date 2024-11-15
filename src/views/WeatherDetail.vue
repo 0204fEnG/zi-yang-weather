@@ -8,12 +8,12 @@
   <div class="detail-container" ref="detailContainer">
   <div class="detail" v-for="country in countries" :key="country.id">
   <WeatherCountry :weatherCountry="country.weatherCountry"></WeatherCountry>
+  <Disaster :disaster="country.disaster.warning"></Disaster>
   <Precipitation :echarts="echarts"></Precipitation>
   <Weather24Hours></Weather24Hours>
   <Weather7Days :echarts="echarts"></Weather7Days>
   <CorrelationIndex></CorrelationIndex>
   <AirQuality></AirQuality>
-  <Disaster></Disaster>
   </div>
   </div>
   <div class="country-manage country2-color-7"></div>
@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import WeatherCountry from '@/components/WeatherCountry'
-import Weather24Hours from '@/components/Weather24Hours'
-import Weather7Days from '@/components/Weather7Days'
-import CorrelationIndex from '@/components/CorrelationIndex'
-import Precipitation from '@/components/Precipitation'
-import AirQuality from '@/components/AirQuality'
-import Disaster from '@/components/Disaster'
+import WeatherCountry from '@/components/WeatherCountry/WeatherCountry'
+import Weather24Hours from '@/components/Weather24Hours/Weather24Hours'
+import Weather7Days from '@/components/Weather7Days/Weather7Days'
+import CorrelationIndex from '@/components/CorrelationIndex/CorrelationIndex'
+import Precipitation from '@/components/Precipitation/Precipitation'
+import AirQuality from '@/components/AirQuality/AirQuality'
+import Disaster from '@/components/Disaster/Disaster'
 import * as weatherApi from '@/api/modules/weather'
 import echarts from '@/utils/echartsSetup.js'
 export default {
@@ -199,7 +199,22 @@ export default {
       // info.nowIndex = await this.getNowIndex(location)
       // const tempDays3Index = await this.get3DaysIndex(location)
       // info.days3Index = this.splitArrayIntoChunks(tempDays3Index, 16)
-      // info.disaster = await this.getDisaster(location)
+      const tempDisaster = await this.getDisaster(location)
+      info.disaster.warning = []
+      for (let i = 0; i < tempDisaster.length; i++) {
+        const tempInfo = {}
+        tempInfo.id = i
+        tempInfo.pubTime = tempDisaster[i].pubTime
+        tempInfo.title = tempDisaster[i].title
+        tempInfo.startTime = tempDisaster[i].startTime
+        tempInfo.endTime = tempDisaster[i].endTime
+        tempInfo.severity = tempDisaster[i].severity
+        tempInfo.severityColor = tempDisaster[i].severityColor
+        tempInfo.typeName = tempDisaster[i].typeName
+        tempInfo.text = tempDisaster[i].text
+        tempInfo.urgency = tempDisaster[i].urgency
+        info.disaster.warning.push(tempInfo)
+      }
       // const tempSun = await this.getSun(location)
       // info.sun.rise = tempSun.data.sunrise
       // info.sun.set = tempSun.data.sunset
