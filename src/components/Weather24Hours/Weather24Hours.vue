@@ -1,6 +1,6 @@
 <template>
 <div class="weather-24hours">
-  <div class="top">tip:当前晴朗</div>
+  <div class="top">近24小时天气</div>
   <div class="bottom">
     <div class="hour-container">
     <div class="bottom-hour" v-for="hour in weather24Hours" :key="hour.id">
@@ -42,26 +42,26 @@ export default {
     border-radius:2.5vh;
     overflow: hidden;
     margin-bottom: 1vh;
-  background-color: rgba(128, 128, 128, 0.5);
-  backdrop-filter: blur(10px);
 }
 .top{
   color:white;
-  font-size:2vh;
-  line-height: 3vh;
   width: 100%;
-  height: 4.5vh;
-  padding: 0.5vh;
-  border-bottom:0.5vh solid rgb(255, 255, 255,0.25);
-  /* background-color: aquamarine; */
+  font-size:2.5vh;
+  text-align: center;
+  line-height: 2.5vh;
+  margin-bottom:1vh;
 }
 .bottom{
   width: 100%;
   height: 100%;
+  border-radius:2.5vh;
   overflow-x: auto;
+  background-color: rgba(128, 128, 128, 0.5);
+  backdrop-filter: blur(10px);
 }
 .bottom::-webkit-scrollbar{
   background: rgba(255,255,255,0.25);
+  border-radius: 0 0 2.5vh 2.5vh;
 }
 .bottom::-webkit-scrollbar-thumb{
   background-color:rgba(255,255,255,0.25);
@@ -73,6 +73,7 @@ export default {
   position: relative;
   flex-direction: row;
   width: 100%;
+  border-radius:2.5vh;
   height: 15vh;
   padding: 2vh 0;
 }
@@ -81,7 +82,7 @@ export default {
   flex:0 0 8vh;
   position: relative;
   margin-right: 1.5vh;
-  border-radius:2vh;
+  border-radius:2.5vh;
   height: 100%;
   background-color:rgb(255, 255, 255,0.25);
 }
@@ -95,7 +96,6 @@ export default {
   width: 100%;
   font-size:2vh;
   text-align: center;
-  height: 4vh;
   line-height: 4vh;
 }
 .hour-tem{
@@ -105,7 +105,6 @@ export default {
   width: 100%;
   font-size:2vh;
   text-align: center;
-  height: 4vh;
   line-height: 4vh;
 }
 </style>

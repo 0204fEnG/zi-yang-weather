@@ -134,9 +134,6 @@ export default {
   font-size: 2vh;
   padding: 1vh;
 }
-.pre-top span{
-  width: 100%;
-}
 .pre-bottom{
 width: 100%;
 height: 30vh;

@@ -7,8 +7,8 @@ export default {
     },
     favouriteCountries: [
       {
-        latitude: 26.41,
-        longitude: 119.23
+        latitude: 27.05,
+        longitude: 119.52
       },
       {
         latitude: 34.14,

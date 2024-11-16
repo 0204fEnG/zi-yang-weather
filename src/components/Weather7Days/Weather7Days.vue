@@ -1,8 +1,8 @@
 <template>
 <div class="weather-7days">
-  <span class="title">近日天气</span>
+  <span class="title">近7日天气</span>
   <div class="days-container">
-    <div class="days-chart"></div>
+    <div class="days-chart" ref="daysChart"></div>
   <div class="days">
     <div class="day" v-for="day in weather7Days" :key="day.id">
       <div class="day-top">
@@ -30,6 +30,9 @@ export default {
       datelist: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
     }
   },
+  created () {
+    console.log(this.tempsMax)
+  },
   mounted () {
     this.myChart7Days = this.init7Days()
     window.addEventListener('resize', this.handleResize)
@@ -40,10 +43,10 @@ export default {
   computed: {
     currentWeek () { return new Date(this.weather7Days[0].fxDate).getDay() },
     tempsMax () {
-      return this.weather7Days.map(item => item.tempMax)
+      return this.weather7Days.map(item => Number(item.tempMax))
     },
     tempsMin () {
-      return this.weather7Days.map(item => item.tempMin)
+      return this.weather7Days.map(item => Number(item.tempMin))
     }
   },
   methods: {
@@ -57,7 +60,7 @@ export default {
       // 接下来的使用就跟之前一样，初始化图表，设置配置项
       const minData = Math.min(...this.tempsMin)
       const maxData = Math.max(...this.tempsMax)
-      const myChart7Days = this.echarts.init(document.querySelector('.days-chart'))
+      const myChart7Days = this.echarts.init(this.$refs.daysChart)
       myChart7Days.setOption({
         xAxis: {
           type: 'category',
@@ -83,8 +86,8 @@ export default {
         },
         yAxis: {
           type: 'value',
-          min: minData - 2,
-          max: maxData + 2,
+          min: minData - 5,
+          max: maxData + 5,
           axisLine: {
             show: false // 隐藏Y轴轴线
           },
@@ -110,7 +113,9 @@ export default {
         series: [
           {
             name: '最高温',
+            data: this.tempsMax,
             type: 'line',
+            smooth: true,
             label: {
               show: true,
               position: 'top',
@@ -121,7 +126,6 @@ export default {
               fontFamily: 'HarmonyOS_Sans_SC_Regular',
               color: 'white'
             },
-            data: this.tempsMax,
             lineStyle: {
               color: 'rgb(255, 123, 41)' // 设置折线的颜色
             },
@@ -133,6 +137,7 @@ export default {
             name: '最低温',
             type: 'line',
             data: this.tempsMin,
+            smooth: true,
             label: {
               show: true,
               position: 'bottom',
@@ -163,7 +168,7 @@ export default {
     width: 100%;
     /* border-radius:2.5vh; */
     margin-bottom: 1vh;
-      border-radius:0 0 2.5vh 2.5vh;
+    border-radius:2.5vh;
     overflow: hidden;
 }
 .title{
@@ -172,7 +177,6 @@ export default {
   color:white;
   width: 100%;
   font-size: 2.5vh;
-  height: 2.5vh;
   line-height: 2.5vh;
   margin-bottom: 1vh;
 }
@@ -223,7 +227,7 @@ export default {
   height: 100%;
   display:flex;
   color:white;
-    font-size: 2vh;
+  font-size: 2vh;
   flex-direction: column;
   border-radius: 2.5vh 2.5vh 0 0;
 }
@@ -239,7 +243,7 @@ export default {
   margin:0 auto;
   height:5vh;
   width:5vh;
-  border-radius:1vh;
+  border-radius:2.5vh;
   margin-bottom: 0.5vh;
 }
 .top-weather{

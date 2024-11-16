@@ -60,7 +60,7 @@ export default {
   },
   created () {
     this.init()
-    this.buttonScroll = this.throttle(this.detailScroll, 500)
+    // this.buttonScroll = this.throttle(this.detailScroll, 500)
   },
   mounted () {
     this.handleResize()
@@ -89,30 +89,32 @@ export default {
         }
       })
     },
-    throttle (func, limit) {
-      let inThrottle = false
-      return function (index) {
-        if (!inThrottle) {
-          func(index)
-          inThrottle = true
-          setTimeout(() => { inThrottle = false }, limit)
-        }
-      }
-    },
+    // throttle (func, limit) {
+    //   let inThrottle
+    //   return function () { // 使用剩余参数来捕获所有传入的参数
+    //     const args = arguments
+    //     const context = this // 保存当前的this上下文
+    //     if (!inThrottle) {
+    //       func.apply(context, args) // 使用apply来调用func，并传递正确的上下文和参数
+    //       inThrottle = true
+    //       setTimeout(() => { inThrottle = false }, limit)
+    //     }
+    //   }
+    // },
     detailScroll (index) {
       this.currentIndex += index
-      this.$refs.detailContainer.scrollBy({
-        left: index * this.detailWidth,
+      this.$refs.detailContainer.scrollTo({
+        left: this.currentIndex * this.detailWidth,
         behavior: 'smooth'
       })
     },
     buttonLeft () {
       if (this.currentIndex === 0) return
-      this.buttonScroll(-1)
+      this.detailScroll(-1)
     },
     buttonRight () {
       if (this.currentIndex === this.countries.length - 1) return
-      this.buttonScroll(1)
+      this.detailScroll(1)
     },
     splitArrayIntoChunks (array, chunkSize) {
       const chunks = []
@@ -158,7 +160,7 @@ export default {
         weatherCountry: {},
         precipitation: {},
         weather24Hours: {},
-        weather7Days: {},
+        weather7Days: [],
         correlationIndex: {},
         airQuality: {},
         disaster: {}
@@ -166,6 +168,7 @@ export default {
       info.name = await this.getCountryInfo(location)
       const tempNowWeather = await this.getNowWeather(location)
       info.weatherCountry.updateTime = tempNowWeather.updateTime
+      console.log(tempNowWeather)
       info.weatherCountry.nowTemp = tempNowWeather.now.temp
       info.weatherCountry.nowWeather = tempNowWeather.now.text
       const temp24HoursWeather = await this.get24HoursWeather(location)
@@ -179,7 +182,8 @@ export default {
         info.weather24Hours.push(tempInfo)
       }
       const temp7DaysWeather = await this.get7DaysWeather(location)
-      info.weather7Days = []
+      info.weatherCountry.tempMax = temp7DaysWeather[0].tempMax
+      info.weatherCountry.tempMin = temp7DaysWeather[0].tempMin
       for (const [index, value] of temp7DaysWeather.entries()) {
         const tempInfo = {}
         tempInfo.id = index + 1
