@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { formatISOTime } from '@/utils/formatISOTime.js'
 export default {
   name: 'WeatherCountry',
   props: {
@@ -23,21 +24,11 @@ export default {
   },
   computed: {
     updateTime () {
-      return this.formatISODate(this.weatherCountry.updateTime)
+      return this.formatISOTime(this.weatherCountry.updateTime, '123')
     }
   },
   methods: {
-    formatISODate (isoDate) {
-      const date = new Date(isoDate)
-      const month = date.getMonth() + 1 // getMonth() 返回0-11，因此需要加1
-      const day = date.getDate()
-      const hours = date.getHours()
-      const minutes = date.getMinutes()
-
-      // 使用padStart确保月份和日期始终是两位数
-      const formattedDate = `${month.toString().padStart(2, '0')}月${day.toString().padStart(2, '0')}日 ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
-      return formattedDate
-    }
+    formatISOTime
   }
 }
 </script>
@@ -46,7 +37,7 @@ export default {
 .weather-country{
   display:flex;
   position: relative;
-  margin-bottom:0.75vw;
+  margin-bottom:1vh;
   border-radius:10px;
   overflow: hidden;
   flex-direction: row;

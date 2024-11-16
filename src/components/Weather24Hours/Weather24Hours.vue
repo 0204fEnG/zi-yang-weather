@@ -3,130 +3,10 @@
   <div class="top">tip:当前晴朗</div>
   <div class="bottom">
     <div class="hour-container">
-    <div class="bottom-hour">
-      <span class="hour-time">22:00</span>
+    <div class="bottom-hour" v-for="hour in weather24Hours" :key="hour.id">
+      <span class="hour-time">{{formatISOTime(hour.fxTime,'3')}}</span>
       <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">23:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">00:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">01:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">02:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">03:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">04:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">05:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">06:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">07:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">08:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">09:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">10:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">11:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">22:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">12:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">13:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">14:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">15:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">16:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">17:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">18:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">19:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">20:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
-    </div>
-    <div class="bottom-hour">
-      <span class="hour-time">21:00</span>
-      <img src="" alt="">
-      <span class="hour-tem">16℃</span>
+      <span class="hour-tem">{{hour.temp}}℃</span>
     </div>
     </div>
   </div>
@@ -134,13 +14,18 @@
 </template>
 
 <script>
+import { formatISOTime } from '@/utils/formatISOTime.js'
 export default {
   name: 'Weather24Hours',
+  props: {
+    weather24Hours: Array
+  },
   data () {
     return {
     }
   },
   methods: {
+    formatISOTime
   },
   computed: {
   }

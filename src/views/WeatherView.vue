@@ -89,7 +89,7 @@ export default {
     height: 100%;
     border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
-     background-image: url('@/assets/WeatherBackground/LightRain1.jpg');
+     background-image: url('@/assets/WeatherBackground/Cloudy1.jpg');
      background-size:cover;
      background-repeat:no-repeat;
     overflow-y: auto;

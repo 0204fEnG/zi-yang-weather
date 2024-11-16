@@ -4,60 +4,12 @@
   <div class="days-container">
     <div class="days-chart"></div>
   <div class="days">
-    <div class="day">
+    <div class="day" v-for="day in weather7Days" :key="day.id">
       <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
+        <span class="top-day">{{day.id===1?"今天":(day.id===2?"明天":datelist[(currentWeek+day.id-1)%7])}}</span>
+        <span class="top-date">{{formatDate(day.fxDate)}}</span>
         <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
-      </div>
-    </div>
-    <div class="day">
-      <div class="day-top">
-        <span class="top-day">今天</span>
-        <span class="top-date">11月9日</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
-        <span class="top-weather">小雨</span>
+        <span class="top-weather">{{day.textDay}}/{{day.textNight}}</span>
       </div>
     </div>
   </div>
@@ -66,14 +18,16 @@
 </template>
 
 <script>
+import { formatDate } from '@/utils/formatISOTime.js'
 export default {
   name: 'Weather7Days',
   props: {
-    echarts: Object
+    echarts: Object,
+    weather7Days: Array
   },
   data () {
     return {
-      days7: [[26, 28, 26, 24, 25, 28, 29], [20, 20, 19, 20, 21, 23, 23]]
+      datelist: ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
     }
   },
   mounted () {
@@ -84,13 +38,16 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   computed: {
-    currentDay () { return new Date().getDay() }
+    currentWeek () { return new Date(this.weather7Days[0].fxDate).getDay() },
+    tempsMax () {
+      return this.weather7Days.map(item => item.tempMax)
+    },
+    tempsMin () {
+      return this.weather7Days.map(item => item.tempMin)
+    }
   },
   methods: {
-    weekDay (time) {
-      const datelist = ['星期天', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-      return datelist[time]
-    },
+    formatDate,
     handleResize () {
       if (this.myChart7Days) {
         this.myChart7Days.resize()
@@ -98,8 +55,8 @@ export default {
     },
     init7Days () {
       // 接下来的使用就跟之前一样，初始化图表，设置配置项
-      const minData = Math.min(...this.days7[1])
-      const maxData = Math.max(...this.days7[0])
+      const minData = Math.min(...this.tempsMin)
+      const maxData = Math.max(...this.tempsMax)
       const myChart7Days = this.echarts.init(document.querySelector('.days-chart'))
       myChart7Days.setOption({
         xAxis: {
@@ -164,7 +121,7 @@ export default {
               fontFamily: 'HarmonyOS_Sans_SC_Regular',
               color: 'white'
             },
-            data: this.days7[0],
+            data: this.tempsMax,
             lineStyle: {
               color: 'rgb(255, 123, 41)' // 设置折线的颜色
             },
@@ -175,7 +132,7 @@ export default {
           {
             name: '最低温',
             type: 'line',
-            data: this.days7[1],
+            data: this.tempsMin,
             label: {
               show: true,
               position: 'bottom',
@@ -211,6 +168,7 @@ export default {
 }
 .title{
   display: block;
+  text-align: center;
   color:white;
   width: 100%;
   font-size: 2.5vh;

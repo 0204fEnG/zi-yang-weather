@@ -1,8 +1,7 @@
 <template>
 <div class="precipitation">
   <div class="pre-top">
-    <span>预计有雨</span>
-    <span>雨预计3分钟后开始下，持续38分钟</span>
+    <i>{{precipitation.summary}}</i>
   </div>
   <div class="pre-bottom" ref="preBottom">
   </div>
@@ -10,10 +9,12 @@
 </template>
 
 <script>
+import { formatISOTime } from '@/utils/formatISOTime.js'
 export default {
   name: 'Precipitation',
   props: {
-    echarts: Object
+    echarts: Object,
+    precipitation: Object
   },
   mounted () {
     this.myChartPre = this.initChart()
@@ -22,7 +23,16 @@ export default {
   beforeDestroy () {
     window.removeEventListener('resize', this.handleResize)
   },
+  computed: {
+    times () {
+      return this.precipitation.minutely.map(item => formatISOTime(item.fxTime, '3'))
+    },
+    precips () {
+      return this.precipitation.minutely.map(item => item.precip)
+    }
+  },
   methods: {
+    formatISOTime,
     handleResize () {
       if (this.myChartPre) {
         this.myChartPre.resize()
@@ -38,7 +48,7 @@ export default {
             color: 'white', // 名称颜色
             fontSize: 18 // 名称字体大小
           },
-          data: ['18:05', '18:10', '18:15', '18:20', '18:25', '18:30', '18:35', '18:40', '18:45', '18:50', '18:55', '19:00', '19:05', '19:10', '19:15', '19:20', '19:25', '19:30', '19:35', '19:40', '19:45', '19:50', '19:55', '20:00'],
+          data: this.times,
           axisLabel: {
             textStyle: {
               fontFamily: 'HarmonyOS_Sans_SC_Regular',
@@ -87,7 +97,7 @@ export default {
         },
         series: [
           {
-            data: [0.05, 0.05, 0.06, 0.10, 0.11, 0.12, 0.12, 0.14, 0.20, 0.24, 0.34, 0.36, 0.34, 0.32, 0.29, 0.25, 0.24, 0.20, 0.20, 0.13, 0.09, 0.03, 0.02, 0.00],
+            data: this.precips,
             type: 'line',
             responsive: true,
             smooth: true,

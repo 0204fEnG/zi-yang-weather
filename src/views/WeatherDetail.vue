@@ -8,10 +8,10 @@
   <div class="detail-container" ref="detailContainer">
   <div class="detail" v-for="country in countries" :key="country.id">
   <WeatherCountry :weatherCountry="country.weatherCountry"></WeatherCountry>
-  <Disaster :disaster="country.disaster.warning"></Disaster>
-  <Precipitation :echarts="echarts"></Precipitation>
-  <Weather24Hours></Weather24Hours>
-  <Weather7Days :echarts="echarts"></Weather7Days>
+  <Disaster :warning="country.disaster.warning"></Disaster>
+  <Precipitation :echarts="echarts" :precipitation="country.precipitation"></Precipitation>
+  <Weather24Hours :weather24Hours="country.weather24Hours"></Weather24Hours>
+  <Weather7Days :echarts="echarts" :weather7Days="country.weather7Days"></Weather7Days>
   <CorrelationIndex></CorrelationIndex>
   <AirQuality></AirQuality>
   </div>
@@ -122,33 +122,33 @@ export default {
       }
       return chunks
     },
-    getNowDate () {
-      // 获取当前日期
-      const currentDate = new Date()
+    // getNowDate () {
+    //   // 获取当前日期
+    //   const currentDate = new Date()
 
-      // 获取年、月、日
-      const year = currentDate.getFullYear()
-      let month = currentDate.getMonth() + 1 // getMonth() 返回的月份是从0开始的，所以需要加1
-      let day = currentDate.getDate()
+    //   // 获取年、月、日
+    //   const year = currentDate.getFullYear()
+    //   let month = currentDate.getMonth() + 1 // getMonth() 返回的月份是从0开始的，所以需要加1
+    //   let day = currentDate.getDate()
 
-      // 将月和日转换为两位数字的字符串
-      month = month < 10 ? '0' + month : month
-      day = day < 10 ? '0' + day : day
+    //   // 将月和日转换为两位数字的字符串
+    //   month = month < 10 ? '0' + month : month
+    //   day = day < 10 ? '0' + day : day
 
-      // 拼接成所需的格式
-      const formattedDate = year.toString() + month + day
-      return formattedDate
-    },
+    //   // 拼接成所需的格式
+    //   const formattedDate = year.toString() + month + day
+    //   return formattedDate
+    // },
     async init () {
       this.initCountries()
     },
     async initCountries () {
       const tempInfo = await this.getInfo(this.currentLat)
-      tempInfo.id = 0
+      tempInfo.id = 1
       this.countries.push(tempInfo)
       for (const [index, value] of this.favouriteLats.entries()) {
         const tempInfo = await this.getInfo(value)
-        tempInfo.id = index + 1
+        tempInfo.id = index + 2
         this.countries.push(tempInfo)
       }
     },
@@ -165,33 +165,34 @@ export default {
       }
       info.name = await this.getCountryInfo(location)
       const tempNowWeather = await this.getNowWeather(location)
-      info.weatherCountry.updateTime = tempNowWeather.data.updateTime
-      info.weatherCountry.nowTemp = tempNowWeather.data.now.temp
-      info.weatherCountry.nowWeather = tempNowWeather.data.now.text
-      // const temp24HoursWeather = await this.get24HoursWeather(location)
-      // info.weather24Hours = []
-      // for (const [, value] of temp24HoursWeather.entries()) {
-      //   const tempInfo = {}
-      //   tempInfo.temp = value.temp
-      //   tempInfo.text = value.text
-      //   info.weather24Hours.push(tempInfo)
-      // }
+      info.weatherCountry.updateTime = tempNowWeather.updateTime
+      info.weatherCountry.nowTemp = tempNowWeather.now.temp
+      info.weatherCountry.nowWeather = tempNowWeather.now.text
+      const temp24HoursWeather = await this.get24HoursWeather(location)
+      info.weather24Hours = []
+      for (const [index, value] of temp24HoursWeather.entries()) {
+        const tempInfo = {}
+        tempInfo.id = index + 1
+        tempInfo.fxTime = value.fxTime
+        tempInfo.temp = value.temp
+        tempInfo.text = value.text
+        info.weather24Hours.push(tempInfo)
+      }
       const temp7DaysWeather = await this.get7DaysWeather(location)
-      info.weatherCountry.tempMax = temp7DaysWeather[0].tempMax
-      info.weatherCountry.tempMin = temp7DaysWeather[0].tempMin
-      // info.weather7Days = []
-      // for (const [, value] of temp7DaysWeather.entries()) {
-      //   const tempInfo = {}
-      //   tempInfo.date = value.fxDate
-      //   tempInfo.weather = value.textDay
-      //   tempInfo.tempMax = value.tempMax
-      //   tempInfo.tempMin = value.tempMin
-      //   tempInfo.text = value.text
-      //   info.weather24Hours.push(tempInfo)
-      // }
-      // const temp2HoursRain = await this.get2HoursRain(location)
-      // info.precipitation.summary = temp2HoursRain.data.summary
-      // info.precipitation.minutely = temp2HoursRain.data.minutely
+      info.weather7Days = []
+      for (const [index, value] of temp7DaysWeather.entries()) {
+        const tempInfo = {}
+        tempInfo.id = index + 1
+        tempInfo.fxDate = value.fxDate
+        tempInfo.textDay = value.textDay
+        tempInfo.tempMax = value.tempMax
+        tempInfo.tempMin = value.tempMin
+        tempInfo.textNight = value.textNight
+        info.weather7Days.push(tempInfo)
+      }
+      const temp2HoursRain = await this.get2HoursRain(location)
+      info.precipitation.summary = temp2HoursRain.summary
+      info.precipitation.minutely = temp2HoursRain.minutely
       const tempNowAirQuality = await this.getNowAirQuality(location)
       info.weatherCountry.nowAirQuality = tempNowAirQuality[0].category
       // info.hours24AirQuality = await this.get24HoursAirQuality(location)
@@ -203,7 +204,7 @@ export default {
       info.disaster.warning = []
       for (let i = 0; i < tempDisaster.length; i++) {
         const tempInfo = {}
-        tempInfo.id = i
+        tempInfo.id = i + 1
         tempInfo.pubTime = tempDisaster[i].pubTime
         tempInfo.title = tempDisaster[i].title
         tempInfo.startTime = tempDisaster[i].startTime
@@ -232,7 +233,7 @@ export default {
     async getNowWeather (lat) {
       console.log('开始获取城市当前天气')
       const nowWeather = await weatherApi.getCurrentWeather({ location: `${lat.longitude},${lat.latitude}` })
-      return nowWeather
+      return nowWeather.data
     },
     async get24HoursWeather (lat) {
       console.log('开始获取城市未来24小时天气')
@@ -247,7 +248,7 @@ export default {
     async get2HoursRain (lat) {
       console.log('开始获取城市未来2小时降雨/雪')
       const hours2Rain = await weatherApi.get2HoursRain({ location: `${lat.longitude},${lat.latitude}` })
-      return hours2Rain
+      return hours2Rain.data
     },
     async getNowAirQuality (lat) {
       console.log('开始获取城市当前空气质量')
@@ -282,12 +283,12 @@ export default {
     async getSun (lat) {
       console.log('开始获取城市日出日落时间')
       const sun = await weatherApi.getSun(`${lat.longitude},${lat.latitude}`, this.getNowDate())
-      return sun
+      return sun.data
     },
     async getMoon (lat) {
       console.log('开始获取城市月出月落时间')
       const moon = await weatherApi.getMoon(`${lat.longitude},${lat.latitude}`, this.getNowDate())
-      return moon
+      return moon.data
     }
   }
 }
