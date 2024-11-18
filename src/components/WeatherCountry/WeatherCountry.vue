@@ -2,10 +2,10 @@
 <div class="weather-country">
   <div class="temperature">
     <div class="temp-top">{{weatherCountry.nowTemp}}</div>
-    <div class="temp-bottom">{{weatherCountry.tempMax}}℃/{{weatherCountry.tempMin}}℃</div>
+    <div class="temp-bottom">{{weatherCountry.tempMax}}&#8239;℃&nbsp;/&nbsp;{{weatherCountry.tempMin}}&#8239;℃</div>
   </div>
   <div class="weather">{{weatherCountry.nowWeather}}&nbsp;</div>
-  <div class="air-quality">&nbsp;{{weatherCountry.nowAirQuality}}</div>
+  <div class="air-quality">&nbsp;空气{{weatherCountry.nowAirQuality}}</div>
   <div class="obs-time">最后更新时间:{{updateTime}}</div>
 </div>
 </template>
@@ -43,6 +43,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content:center;
+  align-items: center;
   width: 100%;
   background-color:transparent;
 }
@@ -72,13 +73,13 @@ export default {
 }
 .temp-top::after{
   content:"°C";
-  font-size:3vh;
+  font-size:4vh;
   color:white;
   position:absolute;
   display:block;
   line-height: 4vh;
   top:0;
-  right:calc(50% - 8vh);
+  right:calc(50% - 10vh);
 }
 .temp-bottom{
   width: 100%;

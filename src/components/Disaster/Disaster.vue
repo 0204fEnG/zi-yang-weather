@@ -1,6 +1,6 @@
 <template>
   <div class="disaster-container">
-    <i v-if="warning.length===0">暂无天气灾害预警</i>
+    <i style="font-size:2vh" v-if="warning.length===0">暂无天气灾害预警</i>
     <div class="disaster" v-else v-for="warningItem in warning" :key="warningItem.id">
       <div class="detail">{{warningItem.typeName}}{{level[warningItem.severityColor]}}预警</div>
       <div class="detail">严重等级:<i :style="{color:warningItem.severityColor}">{{severity[warningItem.severity]}}</i></div>

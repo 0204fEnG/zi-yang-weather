@@ -4,13 +4,13 @@
   <div class="days-container">
     <div class="days-chart" ref="daysChart"></div>
   <div class="days">
-    <div class="day" v-for="day in weather7Days" :key="day.id">
-      <div class="day-top">
+      <div class="day-top" v-for="day in weather7Days" :key="day.id">
         <span class="top-day">{{day.id===1?"今天":(day.id===2?"明天":datelist[(currentWeek+day.id-1)%7])}}</span>
         <span class="top-date">{{formatDate(day.fxDate)}}</span>
-        <img src="@/assets/WeatherBackground/Cloudy3.jpg">
+        <div class="top-img">
+        <img :src="require(`../../../node_modules/qweather-icons/icons/${day.iconDay}.svg`)" class="invert-svg" alt="">/<img :src="require(`../../../node_modules/qweather-icons/icons/${day.iconNight}.svg`)" class="invert-svg" alt="">
+        </div>
         <span class="top-weather">{{day.textDay}}/{{day.textNight}}</span>
-      </div>
     </div>
   </div>
   </div>
@@ -166,7 +166,6 @@ export default {
 <style scoped>
 .weather-7days{
     width: 100%;
-    /* border-radius:2.5vh; */
     margin-bottom: 1vh;
     border-radius:2.5vh;
     overflow: hidden;
@@ -191,6 +190,7 @@ export default {
 }
 .days-container::-webkit-scrollbar{
   background: rgba(255,255,255,0.25);
+  border-radius: 0 0 2.5vh 2.5vh;
 }
 .days-container::-webkit-scrollbar-thumb{
   background-color:rgba(255,255,255,0.25);
@@ -212,41 +212,52 @@ export default {
   display: flex;
   flex-direction: row;
 }
-.day{
+.day-top{
   flex:0 0 13.37vh;
   margin-right: 3vh;
-   border-radius:2.5vh;
-   background:linear-gradient(to bottom,rgb(255, 255, 255,0.25) 0%,rgb(255, 255, 255,0.167) 25%,rgb(255, 255, 255,0.084) 50%,rgb(255, 255, 255,0) 100%);
-  height: 100%;
-}
-.day:last-child{
-  margin-right: 0;
-}
-.day-top{
-  width: 100%;
+  border-radius:2.5vh;
+  background:linear-gradient(to bottom,rgb(255, 255, 255,0.25) 0%,rgb(255, 255, 255,0.167) 25%,rgb(255, 255, 255,0.084) 50%,rgb(255, 255, 255,0) 100%);
   height: 100%;
   display:flex;
   color:white;
   font-size: 2vh;
   flex-direction: column;
-  border-radius: 2.5vh 2.5vh 0 0;
+  align-items: center;
+}
+.day-top:last-child{
+  margin-right: 0;
 }
 .top-day{
   text-align: center;
-  margin-bottom: 0.5vh;
+  line-height: 2vh;
+  margin-top:1.3vh;
+  margin-bottom: 1vh;
 }
 .top-date{
   text-align: center;
-    margin-bottom: 0.5vh;
+  line-height: 2vh;
+  margin-bottom: 1vh;
 }
-.day-top img{
-  margin:0 auto;
-  height:5vh;
-  width:5vh;
-  border-radius:2.5vh;
-  margin-bottom: 0.5vh;
+.top-img{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vh;
+  line-height: 4vh;
+  margin-bottom: 1vh;
+}
+.top-img img{
+  height:4vh;
+  width:4vh;
+}
+.invert-svg {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }
 .top-weather{
+  line-height: 2vh;
   text-align: center;
 }
 </style>

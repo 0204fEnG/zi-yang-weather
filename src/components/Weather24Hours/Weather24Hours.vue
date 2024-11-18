@@ -4,9 +4,9 @@
   <div class="bottom">
     <div class="hour-container">
     <div class="bottom-hour" v-for="hour in weather24Hours" :key="hour.id">
-      <span class="hour-time">{{formatISOTime(hour.fxTime,'3')}}</span>
-      <img src="" alt="">
-      <span class="hour-tem">{{hour.temp}}℃</span>
+      <div class="hour-time">{{formatISOTime(hour.fxTime,'3')}}</div>
+      <img :src="require(`../../../node_modules/qweather-icons/icons/${hour.icon}.svg`)" class="invert-svg" alt="">
+      <div class="hour-tem">{{hour.temp}}℃</div>
     </div>
     </div>
   </div>
@@ -36,24 +36,23 @@ export default {
 .weather-24hours{
     width: 100%;
     display:flex;
-    position: relative;
     flex-direction:row;
     flex-wrap: wrap;
     border-radius:2.5vh;
-    overflow: hidden;
     margin-bottom: 1vh;
+    overflow: hidden;
 }
 .top{
   color:white;
   width: 100%;
   font-size:2.5vh;
   text-align: center;
+  height: 2.5vh;
   line-height: 2.5vh;
   margin-bottom:1vh;
 }
 .bottom{
   width: 100%;
-  height: 100%;
   border-radius:2.5vh;
   overflow-x: auto;
   background-color: rgba(128, 128, 128, 0.5);
@@ -70,7 +69,6 @@ export default {
 .hour-container{
   color:white;
   display: flex;
-  position: relative;
   flex-direction: row;
   width: 100%;
   border-radius:2.5vh;
@@ -80,7 +78,11 @@ export default {
 
 .bottom-hour{
   flex:0 0 8vh;
-  position: relative;
+  display:flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  flex-wrap: wrap;
   margin-right: 1.5vh;
   border-radius:2.5vh;
   height: 100%;
@@ -89,22 +91,25 @@ export default {
 .bottom-hour:last-child{
   margin-right: 0;
 }
+img{
+  width: 4vh;
+  height: 4vh;
+}
+.invert-svg {
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
 .hour-time{
-  display: block;
-  position: absolute;
-  top:0;
-  width: 100%;
+  flex:0 0 100%;
   font-size:2vh;
+  height: 3vh;
   text-align: center;
-  line-height: 4vh;
+  line-height: 3vh;
 }
 .hour-tem{
-  position: absolute;
-  bottom:0;
-  display: block;
-  width: 100%;
+  flex:0 0 100%;
   font-size:2vh;
+  height: 3vh;
   text-align: center;
-  line-height: 4vh;
+  line-height: 3vh;
 }
 </style>

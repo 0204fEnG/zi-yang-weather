@@ -176,6 +176,7 @@ export default {
       for (const [index, value] of temp24HoursWeather.entries()) {
         const tempInfo = {}
         tempInfo.id = index + 1
+        tempInfo.icon = value.icon
         tempInfo.fxTime = value.fxTime
         tempInfo.temp = value.temp
         tempInfo.text = value.text
@@ -189,6 +190,8 @@ export default {
         tempInfo.id = index + 1
         tempInfo.fxDate = value.fxDate
         tempInfo.textDay = value.textDay
+        tempInfo.iconDay = value.iconDay
+        tempInfo.iconNight = value.iconNight
         tempInfo.tempMax = value.tempMax
         tempInfo.tempMin = value.tempMin
         tempInfo.textNight = value.textNight
@@ -316,6 +319,7 @@ export default {
 }
 .detail{
   flex:0 0 100%;
+  max-width: 100%;
   height: auto;
   padding: 0 1vh;
   scroll-snap-align: center;
