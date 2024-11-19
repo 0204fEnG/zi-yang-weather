@@ -12,8 +12,8 @@
   <Precipitation :echarts="echarts" :precipitation="country.precipitation"></Precipitation>
   <Weather24Hours :weather24Hours="country.weather24Hours"></Weather24Hours>
   <Weather7Days :echarts="echarts" :weather7Days="country.weather7Days"></Weather7Days>
-  <CorrelationIndex></CorrelationIndex>
-  <AirQuality></AirQuality>
+  <AirQuality :echarts="echarts" :airQuality="country.airQuality"></AirQuality>
+  <CorrelationIndex :echarts="echarts"></CorrelationIndex>
   </div>
   </div>
   <div class="country-manage country2-color-7"></div>
@@ -201,7 +201,17 @@ export default {
       info.precipitation.summary = temp2HoursRain.summary
       info.precipitation.minutely = temp2HoursRain.minutely
       const tempNowAirQuality = await this.getNowAirQuality(location)
-      info.weatherCountry.nowAirQuality = tempNowAirQuality[0].category
+      info.weatherCountry.nowAirQuality = tempNowAirQuality.indexes[0].category
+      info.airQuality.now = {}
+      info.airQuality.now.indexes = []
+      info.airQuality.now.pollutants = []
+      for (const [index, value] of tempNowAirQuality.pollutants.entries()) {
+        const tempInfo = {}
+        tempInfo.id = index + 1
+        tempInfo.name = value.name
+        tempInfo.concentration = value.concentration
+        info.airQuality.now.pollutants.push(tempInfo)
+      }
       // info.hours24AirQuality = await this.get24HoursAirQuality(location)
       // info.days3AirQuality = await this.get3DaysAirQuality(location)
       // info.nowIndex = await this.getNowIndex(location)
@@ -260,7 +270,7 @@ export default {
     async getNowAirQuality (lat) {
       console.log('开始获取城市当前空气质量')
       const nowAirQuality = await weatherApi.getCurrentAirQuality(lat.latitude, lat.longitude)
-      return nowAirQuality.data.indexes
+      return nowAirQuality.data
     },
     async get24HoursAirQuality (lat) {
       console.log('开始获取城市未来24小时空气质量')

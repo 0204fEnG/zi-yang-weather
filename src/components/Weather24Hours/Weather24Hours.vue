@@ -5,7 +5,9 @@
     <div class="hour-container">
     <div class="bottom-hour" v-for="hour in weather24Hours" :key="hour.id">
       <div class="hour-time">{{formatISOTime(hour.fxTime,'3')}}</div>
+      <div class="image">
       <img :src="require(`../../../node_modules/qweather-icons/icons/${hour.icon}.svg`)" class="invert-svg" alt="">
+      </div>
       <div class="hour-tem">{{hour.temp}}℃</div>
     </div>
     </div>
@@ -91,9 +93,17 @@ export default {
 .bottom-hour:last-child{
   margin-right: 0;
 }
-img{
-  width: 4vh;
+.image{
+  flex:0 0 100%;
+  display: flex;
+  flex:row;
+  justify-content: center;
+  align-items: center;
   height: 4vh;
+}
+img{
+  transform: translateY(-9%);
+  height: 100%;
 }
 .invert-svg {
   filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
@@ -101,15 +111,15 @@ img{
 .hour-time{
   flex:0 0 100%;
   font-size:2vh;
-  height: 3vh;
+  height: 3.5vh;
   text-align: center;
-  line-height: 3vh;
+  line-height: 3.5vh;
 }
 .hour-tem{
   flex:0 0 100%;
   font-size:2vh;
-  height: 3vh;
+  height: 3.5vh;
   text-align: center;
-  line-height: 3vh;
+  line-height: 3.5vh;
 }
 </style>

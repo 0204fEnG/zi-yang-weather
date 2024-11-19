@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'Disaster',
   props: {
     warning: Array
   },
