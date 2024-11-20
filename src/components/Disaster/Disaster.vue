@@ -56,6 +56,14 @@ export default {
     background-color: rgba(128, 128, 128, 0.5);
   backdrop-filter: blur(10px);
   margin-bottom: 1vh;
+  transition:all 0.2s ease-in-out;
+}
+.disaster-container:active{
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.disaster-container:hover{
+  cursor: pointer;
 }
 .disaster{
   color: white;

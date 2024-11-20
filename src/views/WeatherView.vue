@@ -1,6 +1,6 @@
 <template>
   <div id="weather-container" ref="weatherContainer">
-    <div class="weather-nav nav-color-7">
+    <div class="weather-nav nav-color-4">
         <div class="router-link"  @click="linkClick('/weather')" @mouseover="currentHoverLink='/weather'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/weather'||isActiveLink('/weather')}">天气</div>
         <div class="router-link"  @click="linkClick('/assistant')" @mouseover="currentHoverLink='/assistant'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/assistant'||isActiveLink('/assistant')}">生活助手</div>
         <div class="router-link"  @click="linkClick('/setting')" @mouseover="currentHoverLink='/setting'" @mouseleave="currentHoverLink=''" :class="{'active-router-link':currentHoverLink==='/setting'||isActiveLink('/setting')}">设置</div>
@@ -89,7 +89,7 @@ export default {
     height: 100%;
     border-radius:2.5vh;
     /* background-color:rgb(165, 194, 223); */
-     background-image: url('@/assets/WeatherBackground/Cloudy1.jpg');
+     background-image: url('@/assets/WeatherBackground/Clear1.jpg');
      background-size:cover;
      background-repeat:no-repeat;
     overflow-y: auto;

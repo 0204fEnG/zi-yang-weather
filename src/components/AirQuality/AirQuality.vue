@@ -8,7 +8,8 @@
             <div class="title2">污染物浓度</div>
             <div class="pollutants">
             <div class="pollutant" v-for="pollutant in airQuality.now.pollutants" :key="pollutant.id">
-                {{pollutant.name}}&nbsp;&nbsp;&nbsp;{{pollutant.concentration.value}}
+                <span class="name">{{pollutant.name}}</span>
+                <span class="value">{{pollutant.concentration.value}}</span>
             </div>
             </div>
         </div>
@@ -63,6 +64,14 @@ export default {
     height: 100%;
     background-color: rgb(255, 255, 255,0.25);
     border-radius:1.25vh;
+    transition:all 0.2s ease-in-out;
+}
+.indexes-echart:active{
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.indexes-echart:hover{
+  cursor: pointer;
 }
 .pollutants-container{
     flex:0 0 49%;
@@ -74,6 +83,14 @@ export default {
     flex-wrap: wrap;
     background-color: rgb(255, 255, 255,0.25);
     border-radius:1.25vh;
+     transition:all 0.2s ease-in-out;
+}
+.pollutants-container:active{
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.pollutants-container:hover{
+  cursor: pointer;
 }
 .title2{
     flex:0 0 100%;
@@ -89,21 +106,32 @@ export default {
     flex:0 0 100%;
     height: calc(100% - 2.5vh);
     display:flex;
-    padding: 1vh;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-content: space-between;
+    justify-content: start;
+    align-content: space-around;
 }
 .pollutant{
-    flex:0 0 45%;
-    font-size: 2vh;
+    flex:0 0 46%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    font-size: calc(0.25vw + 1.25vh);
     color:white;
+    margin: 0 2%;
     text-align: center;
     height: 3vh;
     line-height: 3vh;
     border-radius:1.25vh;
     background-color: rgba(128, 128, 128, 0.5);
+}
+.name{
+    flex:0 0 50%;
+    height: 100%;
+}
+.value{
+    flex:0 0 50%;
+    height: 100%;
 }
 @media (max-aspect-ratio: 1){
     .content{

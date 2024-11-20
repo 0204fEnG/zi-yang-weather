@@ -44,6 +44,7 @@ export default {
     margin-bottom: 1vh;
     overflow: hidden;
 }
+
 .top{
   color:white;
   width: 100%;
@@ -89,6 +90,14 @@ export default {
   border-radius:2.5vh;
   height: 100%;
   background-color:rgb(255, 255, 255,0.25);
+  transition:all 0.2s ease-in-out;
+}
+.bottom-hour:active{
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.bottom-hour:hover{
+  cursor: pointer;
 }
 .bottom-hour:last-child{
   margin-right: 0;
@@ -102,7 +111,6 @@ export default {
   height: 4vh;
 }
 img{
-  transform: translateY(-9%);
   height: 100%;
 }
 .invert-svg {

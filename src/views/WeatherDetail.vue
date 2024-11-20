@@ -1,6 +1,6 @@
 <template>
 <div id="weather-detail">
-  <div class="country country1-color-7">
+  <div class="country country1-color-4">
     <div>{{countries[this.currentIndex].name}}</div>
     <div class="left" @click="buttonLeft">&lt;</div>
     <div class="right" @click="buttonRight">&gt;</div>
@@ -14,9 +14,14 @@
   <Weather7Days :echarts="echarts" :weather7Days="country.weather7Days"></Weather7Days>
   <AirQuality :echarts="echarts" :airQuality="country.airQuality"></AirQuality>
   <CorrelationIndex :echarts="echarts"></CorrelationIndex>
+  <Wind></Wind>
+  <SunMoon></SunMoon>
   </div>
   </div>
-  <div class="country-manage country2-color-7"></div>
+  <div class="country-manage country2-color-4">
+    <div class="manage-1"></div>
+    <div class="manage-1"></div>
+  </div>
 </div>
 </template>
 
@@ -28,8 +33,11 @@ import CorrelationIndex from '@/components/CorrelationIndex/CorrelationIndex'
 import Precipitation from '@/components/Precipitation/Precipitation'
 import AirQuality from '@/components/AirQuality/AirQuality'
 import Disaster from '@/components/Disaster/Disaster'
+import SunMoon from '@/components/SunMoon/SunMoon'
+import Wind from '@/components/Wind/Wind'
 import * as weatherApi from '@/api/modules/weather'
 import echarts from '@/utils/echartsSetup.js'
+
 export default {
   components: {
     WeatherCountry,
@@ -38,7 +46,9 @@ export default {
     Precipitation,
     AirQuality,
     CorrelationIndex,
-    Disaster
+    Disaster,
+    SunMoon,
+    Wind
   },
   name: 'WeatherDetail',
   data () {
@@ -60,11 +70,9 @@ export default {
   },
   created () {
     this.init()
-    // this.buttonScroll = this.throttle(this.detailScroll, 500)
   },
   mounted () {
-    this.handleResize()
-    window.addEventListener('resize', this.handleResize)
+    this.init_dom()
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.handleResize)
@@ -81,6 +89,10 @@ export default {
     }
   },
   methods: {
+    init_dom () {
+      this.handleResize()
+      window.addEventListener('resize', this.handleResize)
+    },
     handleResize () {
       this.$nextTick(() => {
         const detailElement = this.$refs.detailContainer.querySelector('.detail')
@@ -89,18 +101,6 @@ export default {
         }
       })
     },
-    // throttle (func, limit) {
-    //   let inThrottle
-    //   return function () { // 使用剩余参数来捕获所有传入的参数
-    //     const args = arguments
-    //     const context = this // 保存当前的this上下文
-    //     if (!inThrottle) {
-    //       func.apply(context, args) // 使用apply来调用func，并传递正确的上下文和参数
-    //       inThrottle = true
-    //       setTimeout(() => { inThrottle = false }, limit)
-    //     }
-    //   }
-    // },
     detailScroll (index) {
       this.currentIndex += index
       this.$refs.detailContainer.scrollTo({
@@ -124,23 +124,6 @@ export default {
       }
       return chunks
     },
-    // getNowDate () {
-    //   // 获取当前日期
-    //   const currentDate = new Date()
-
-    //   // 获取年、月、日
-    //   const year = currentDate.getFullYear()
-    //   let month = currentDate.getMonth() + 1 // getMonth() 返回的月份是从0开始的，所以需要加1
-    //   let day = currentDate.getDate()
-
-    //   // 将月和日转换为两位数字的字符串
-    //   month = month < 10 ? '0' + month : month
-    //   day = day < 10 ? '0' + day : day
-
-    //   // 拼接成所需的格式
-    //   const formattedDate = year.toString() + month + day
-    //   return formattedDate
-    // },
     async init () {
       this.initCountries()
     },
@@ -163,7 +146,9 @@ export default {
         weather7Days: [],
         correlationIndex: {},
         airQuality: {},
-        disaster: {}
+        disaster: {},
+        SunMoon: {},
+        Wind: {}
       }
       info.name = await this.getCountryInfo(location)
       const tempNowWeather = await this.getNowWeather(location)
@@ -380,8 +365,25 @@ export default {
   position: sticky;
   bottom:0;
   width: 100%;
-  height: 7vh;
+  height: 8vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 1vh 2.5vh;
   backdrop-filter:blur(10px);
+}
+.manage-1{
+  flex:0 0 6vh;
+  height: 100%;
+  border-radius:3vh;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  background-color: rgb(255, 255, 255,0.5);
+}
+.manage-1:active{
+  transform: scale(0.9);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 .country1-color-1{
   background: linear-gradient(to bottom,rgb(128, 128, 128,0.5),rgba(255, 255, 255, 0.5));

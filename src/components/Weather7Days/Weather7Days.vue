@@ -177,6 +177,7 @@ export default {
   width: 100%;
   font-size: 2.5vh;
   line-height: 2.5vh;
+  height: 2.5vh;
   margin-bottom: 1vh;
 }
 .days-container{
@@ -223,6 +224,14 @@ export default {
   font-size: 2vh;
   flex-direction: column;
   align-items: center;
+  transition:all 0.2s ease-in-out;
+}
+.day-top:active{
+  transform: scale(0.95);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+.day-top:hover{
+  cursor: pointer;
 }
 .day-top:last-child{
   margin-right: 0;
