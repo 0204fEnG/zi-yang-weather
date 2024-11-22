@@ -188,7 +188,9 @@ export default {
       const tempNowAirQuality = await this.getNowAirQuality(location)
       info.weatherCountry.nowAirQuality = tempNowAirQuality.indexes[0].category
       info.airQuality.now = {}
-      info.airQuality.now.indexes = []
+      info.airQuality.now.indexes = {}
+      info.airQuality.now.indexes.aqi = tempNowAirQuality.indexes[0].aqi
+      info.airQuality.now.indexes.color = `rgb(${tempNowAirQuality.indexes[0].color.red},${tempNowAirQuality.indexes[0].color.green},${tempNowAirQuality.indexes[0].color.blue},${tempNowAirQuality.indexes[0].color.alpha})`
       info.airQuality.now.pollutants = []
       for (const [index, value] of tempNowAirQuality.pollutants.entries()) {
         const tempInfo = {}

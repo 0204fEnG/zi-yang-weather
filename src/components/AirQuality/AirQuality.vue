@@ -3,6 +3,15 @@
     <div class="title">今日空气质量</div>
     <div class="content">
         <div class="indexes-echart">
+          <div class="outer">
+          <div class="outer0" :style="{backgroundColor:this.progressColor}">
+            <div class="inner0" ref="inner0"></div>
+          </div>
+          <div class="outer1" :style="{backgroundColor:this.progressColor}">
+            <div class="inner1" ref="inner1"></div>
+          </div>
+          <div class="outerself">污染指数:{{this.airQuality.now.indexes.aqi}}</div>
+          </div>
         </div>
         <div class="pollutants-container">
             <div class="title2">污染物浓度</div>
@@ -22,6 +31,32 @@ export default {
   name: 'AirQuality',
   props: {
     airQuality: Object
+  },
+  mounted () {
+    this.init_echart()
+  },
+  computed: {
+    progress () {
+      return this.airQuality.now.indexes.aqi / 5
+    },
+    progressColor () {
+      return this.airQuality.now.indexes.color
+    }
+  },
+  methods: {
+    init_echart () {
+      const box0 = this.$refs.inner0
+      const box1 = this.$refs.inner1
+      if (this.progress <= 50) {
+        box1.style.transform = `rotate(${this.progress * 3.6}deg)`
+      } else {
+        box1.style.transform = `rotate(${50 * 3.6}deg)`
+        setTimeout(() => {
+          box0.classList.add('inner01')
+          box0.style.transform = `rotate(${(this.progress - 50) * 3.6}deg)`
+        }, 1000)
+      }
+    }
   }
 }
 </script>
@@ -62,9 +97,112 @@ export default {
 .indexes-echart{
     flex:0 0 49%;
     height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     background-color: rgb(255, 255, 255,0.25);
     border-radius:1.25vh;
     transition:all 0.2s ease-in-out;
+}
+.outer{
+  height: 17vh;
+  aspect-ratio: 1;
+  position: relative;
+}
+.outerself{
+  font-size:2vh;
+  color:rgb(0, 0, 0);
+  position: absolute;
+  text-align: center;
+  line-height: calc(17vh - 2vh);
+  height: calc(17vh - 2vh);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  top:1vh;
+  left: 1vh;
+  background-color: rgb(202, 202, 202);
+}
+.outer0{
+  position: absolute;
+  height: 17vh;
+  aspect-ratio: 1;
+  top:0;
+  left: 0;
+  border-radius: 50%;
+  clip:rect(0px,8.5vh,17vh,0);
+}
+.inner0{
+  position: absolute;
+  height: 17vh;
+  aspect-ratio: 1;
+  top:0;
+  left:0;
+  background-color: rgb(181, 180, 180);
+  border-radius: 50%;
+  clip:rect(0px,8.5vh,17vh,0);
+  animation: cir0  linear 1s 1s;
+}
+.inner0::after{
+  position: absolute;
+  content:'';
+  display: block;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.5vh 0 0 0.5vh;
+  width: 1vh;
+  height: 1vh;
+  bottom:0;
+  opacity: 0;
+  left:calc(50% - 1vh);
+  /* animation: cir01 linear 0s 1s forwards; */
+}
+.inner01::after{
+  opacity: 1;
+}
+.outer1{
+  position: absolute;
+ height: 17vh;
+  aspect-ratio: 1;
+  top:0;
+  left: 0;
+   border-radius: 50%;
+  clip:rect(0,17vh,17vh,8.5vh);
+}
+.inner1{
+  position: absolute;
+  height: 17vh;
+  aspect-ratio: 1;
+  top:0;
+  left:0;
+  background-color: rgb(181, 180, 180);
+  border-radius: 50%;
+  clip:rect(0,17vh,17vh,8.5vh);
+  animation: cir1  linear 1s ;
+}
+.inner1::after{
+  position: absolute;
+  content:'';
+  display: block;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0 0.5vh 0.5vh 0;
+  width: 1vh;
+  height: 1vh;
+  top:0;
+  left:calc(50%);
+}
+@keyframes cir0 {
+  0%{
+    transform: rotate(0deg);
+  }
+}
+/* @keyframes cir01 {
+  100%{
+    opacity: 1;
+  }
+} */
+@keyframes cir1 {
+  0%{
+    transform: rotate(0deg);
+  }
 }
 .indexes-echart:active{
   transform: scale(0.95);
