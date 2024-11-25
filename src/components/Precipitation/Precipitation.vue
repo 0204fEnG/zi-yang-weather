@@ -46,7 +46,7 @@ export default {
           name: '时间',
           nameTextStyle: {
             color: 'white', // 名称颜色
-            fontSize: 18 // 名称字体大小
+            fontSize: 12 // 名称字体大小
           },
           data: this.times,
           axisLabel: {
@@ -70,7 +70,7 @@ export default {
           name: '降水量/mm',
           nameTextStyle: {
             color: 'white', // 名称颜色
-            fontSize: 18 // 名称字体大小
+            fontSize: 12 // 名称字体大小
           },
           splitLine: {
             show: true, // 确保分隔线是显示的
@@ -89,10 +89,10 @@ export default {
           }
         },
         grid: {
-          top: '18%', // 上边距
-          right: '12%', // 右边距
-          bottom: '7%', // 下边距
-          left: '5%', // 左边距
+          top: '19%', // 上边距
+          right: '15%', // 右边距
+          bottom: '5%', // 下边距
+          left: '4%', // 左边距
           containLabel: true
         },
         series: [

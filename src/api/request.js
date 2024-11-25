@@ -40,7 +40,7 @@ weatherService.interceptors.request.use(
 
 // 创建获取token的Axios实例
 const jwtService = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://10.72.91.241:3000',
   timeout: 5000
 })
 // 导出实例

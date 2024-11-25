@@ -105,7 +105,7 @@ export default {
     transition:all 0.2s ease-in-out;
 }
 .outer{
-  height: 17vh;
+  height: 100%;
   aspect-ratio: 1;
   position: relative;
 }
