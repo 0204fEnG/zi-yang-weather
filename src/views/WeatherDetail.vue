@@ -330,7 +330,7 @@ export default {
   line-height: 5vh;
   font-size:3vh;
   margin-bottom:1vh;
-  top:7.44vh;
+  top:7vh;
   width: 100%;
   height: 5vh;
   background:linear-gradient(to bottom,rgb(61, 137, 220,0.5),rgb(255, 255, 255,0.5));
